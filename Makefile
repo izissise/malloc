@@ -5,7 +5,7 @@
 ## Login   <moriss_h@epitech.net>
 ##
 ## Started on  Sun Jun  9 03:35:24 2013 Hugues
-## Last update Fri Jan 31 11:54:04 2014 Hugues
+## Last update Fri Jan 31 12:06:34 2014 Hugues
 ##
 
 SRC = src/malloc.c \
@@ -31,7 +31,7 @@ dummy:= $(shell test -d $(SRCDIR) || mkdir -p $(SRCDIR))
 
 $(OBJDIR)%.o:	%.c
 		@if [ ! -d $(dir $@) ]; then mkdir -p $(dir $@); fi
-		@echo -e "Compiling $*" | sed 's/^-e //' \
+		@echo -e "Compiling $< { $(CFLAGS) }" | sed 's/^-e //' \
 		| sed 's/[-a-zA-Z]\+/\x1B[31m&\x1B[0m/g' \
 		| sed 's/[A-Z]\+/\x1B[32m&\x1B[0m/g' \
 		| sed 's/[{}]/\x1B[34m&\x1B[0m/g' \
@@ -39,7 +39,7 @@ $(OBJDIR)%.o:	%.c
 		@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME):	$(OBJ)
-		@echo -e "Linking $@ !" | sed 's/^-e //' \
+		@echo -e "Linking $@ { $(LDFLAGS) }" | sed 's/^-e //' \
 		| sed 's/[-a-zA-Z]\+/\x1B[34m&\x1B[0m/g'
 		@$(CC) $(LDFLAGS) -o $(NAME) $(OBJ)
 
