@@ -1,9 +1,9 @@
 /*
 ** malloc.c for header in /home/collin_b/project/hello_memory
-** 
+**
 ** Made by jonathan.collinet
 ** Login   <collin_b@epitech.net>
-** 
+**
 ** Started on  Fri Jan 31 11:45:34 2014 jonathan.collinet
 ** Last update Fri Jan 31 17:40:23 2014 jonathan.collinet
 */
@@ -16,10 +16,9 @@ void		*malloc(size_t size)
 
   if (!first_addr)
     {
-      first_addr = sbrk(ALIGN(size + sizeof(t_list) + sizeof(intptr_t), 12));
+      first_addr = sbrk(ALIGN_PS(size + sizeof(t_list) + sizeof(intptr_t), getpagesize()));
       init_pages(first_addr, size);
       init_chunk(first_addr, NULL, ALIGN(size, 12));
-      /* add_chunk(); */
       return (first_addr + sizeof(t_list));
     }
   return ((void*)0x0);
@@ -27,13 +26,12 @@ void		*malloc(size_t size)
 
 void		*realloc(void *ptr, size_t size)
 {
-  if (!ptr && !size)
-    printf("yolo!\n");
+  (void)ptr;
+  (void)size;
   return (ptr);
 }
 
 void		free(void *ptr)
 {
-  if (!ptr)
-    return ;
+  (void)ptr;
 }

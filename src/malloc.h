@@ -1,9 +1,9 @@
 /*
 ** malloc.h for header in /home/collin_b/project/hello_memory
-** 
+**
 ** Made by jonathan.collinet
 ** Login   <collin_b@epitech.net>
-** 
+**
 ** Started on  Fri Jan 31 11:29:51 2014 jonathan.collinet
 ** Last update Fri Jan 31 17:13:35 2014 jonathan.collinet
 */
@@ -12,8 +12,6 @@
 # define MALLOC_H_
 
 # include <unistd.h>
-# include <string.h>
-# include <stdio.h>
 
 # define ALIGN(size, power)	(((((size) - 1) >> (power)) + 1) << (power))
 # define ALIGN_PS(size, ps)	(((((size) - 1) / (ps)) + 1) * (ps))
