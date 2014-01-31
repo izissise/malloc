@@ -5,11 +5,11 @@
 ## Login   <moriss_h@epitech.net>
 ##
 ## Started on  Sun Jun  9 03:35:24 2013 Hugues
-## Last update Fri Jan 31 12:17:32 2014 jonathan.collinet
+## Last update Fri Jan 31 15:09:43 2014 jonathan.collinet
 ##
 
-SRC = src/malloc.c \
-	 src/linked_list.c
+SRC		=	src/malloc.c \
+			src/linked_list.c
 
 CC = gcc
 
