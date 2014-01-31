@@ -5,7 +5,7 @@
 ## Login   <moriss_h@epitech.net>
 ##
 ## Started on  Sun Jun  9 03:35:24 2013 Hugues
-## Last update Fri Jan 31 12:06:34 2014 Hugues
+## Last update Fri Jan 31 12:17:32 2014 jonathan.collinet
 ##
 
 SRC = src/malloc.c \
@@ -51,7 +51,7 @@ clean:
 	@$(RM) $(OBJ)
 
 fclean:	clean
-	@echo -e "Removing ${NAME}!" | sed 's/^-e //' \
+	@echo -e "Removing ${NAME} !" | sed 's/^-e //' \
 	| sed 's/[-a-zA-Z]\+/\x1B[36m&\x1B[0m/g'
 	@$(RM) $(NAME)
 
