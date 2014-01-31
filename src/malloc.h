@@ -16,10 +16,12 @@
 # define ALIGN(size, power)	(((((size) - 1) >> (power)) + 1) << (power))
 # define ALIGN_PS(size, ps)	(((((size) - 1) / (ps)) + 1) * (ps))
 
-typedef struct		l_list
+# define LASTNODE(brkaddr)	((brkaddr) - sizeof(intptr_t) - (*((intptr_t*)((brkaddr) - sizeof(intptr_t)))))
+
+typedef struct		s_list
 {
-  struct l_list		*prev;
-  struct l_list		*next;			// begin of area = this + struct_size
+  struct s_list		*prev;
+  struct s_list		*next;
   unsigned long		is_free;
 }			t_list;
 
@@ -35,7 +37,7 @@ void			free(void *ptr);
 **	init_chunk.c
 */
 
-void			init_pages(t_list *first, intptr_t size);
+void			init_pages(t_list *first, t_list *prev_chunk, intptr_t size);
 void			init_chunk(t_list *chunk, t_list *prev_chunk, intptr_t size);
 
 /*
@@ -43,5 +45,11 @@ void			init_chunk(t_list *chunk, t_list *prev_chunk, intptr_t size);
 */
 
 int			add_chunk(t_list *new_chunk, size_t size_chunk);
+
+/*
+** search_node.c
+*/
+
+t_list		*find_free_size_node(t_list *last_node, intptr_t req_size);
 
 #endif

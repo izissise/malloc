@@ -5,12 +5,13 @@
 ## Login   <moriss_h@epitech.net>
 ##
 ## Started on  Sun Jun  9 03:35:24 2013 Hugues
-## Last update Fri Jan 31 17:37:11 2014 jonathan.collinet
+## Last update Fri Jan 31 19:14:45 2014 Hugues
 ##
 
 SRC		=	src/malloc.c \
 			src/linked_list.c \
-			src/init_chunk.c
+			src/init_chunk.c \
+			src/search_node.c
 
 CC		=	gcc
 
