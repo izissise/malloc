@@ -5,26 +5,27 @@
 ## Login   <moriss_h@epitech.net>
 ##
 ## Started on  Sun Jun  9 03:35:24 2013 Hugues
-## Last update Fri Jan 31 15:09:43 2014 jonathan.collinet
+## Last update Fri Jan 31 17:37:11 2014 jonathan.collinet
 ##
 
 SRC		=	src/malloc.c \
-			src/linked_list.c
+			src/linked_list.c \
+			src/init_chunk.c
 
-CC = gcc
+CC		=	gcc
 
-RM = rm -f
+RM		=	rm -f
 
-NAME = libmalloc.so
+NAME		=	libmalloc.so
 
-OBJDIR = obj/
-SRCDIR = src/
+OBJDIR		=	obj/
+SRCDIR		=	src/
 
-CFLAGS	+= -Wall -Wextra -fPIC
+CFLAGS		+=	-Wall -Wextra -fPIC
 
-LDFLAGS += -shared
+LDFLAGS		+=	-shared
 
-OBJ = $(patsubst %.c,${OBJDIR}%.o,$(SRC))
+OBJ		=	$(patsubst %.c,${OBJDIR}%.o,$(SRC))
 
 dummy:= $(shell test -d $(OBJDIR) || mkdir -p $(OBJDIR))
 dummy:= $(shell test -d $(SRCDIR) || mkdir -p $(SRCDIR))
