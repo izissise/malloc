@@ -38,9 +38,12 @@ void		*malloc(size_t size)
       result_node = find_free_size_node(last_node, size);
       if (result_node == last_node)
         return NULL;
+      printf("bang\n");
+      reuse_chunk(result_node, size);
     }
-  printf("ptr: %p\n", result_node + sizeof(t_list));
-  return (result_node + sizeof(t_list));
+  printf("node: %p ptr: %p next: %p\n", result_node, (void*)result_node + sizeof(t_list), result_node->next);
+  result_node->is_free = 0;
+  return ((void*)result_node + sizeof(t_list));
 }
 
 void		*realloc(void *ptr, size_t size)

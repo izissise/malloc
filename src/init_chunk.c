@@ -12,8 +12,8 @@
 
 void		init_pages(t_list *first, t_list *prev_chunk, size_t size)
 {
-  size_t	f_space_size;
-  size_t	total_ps;
+  size_t		f_space_size;
+  size_t		total_ps;
   intptr_t	*size_var_addr;
 
   total_ps = ALIGN_PS(size, getpagesize());
@@ -39,6 +39,5 @@ void		*init_first_chunk(size_t size)
   if (first_addr == ((void*)(-1)))
     return NULL;
   init_pages(first_addr, NULL, size);
-  first_addr->is_free = 0;
   return (first_addr);
 }

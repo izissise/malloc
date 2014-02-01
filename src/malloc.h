@@ -18,7 +18,8 @@
 # define ALIGN(size, power)	(((((size) - 1) >> (power)) + 1) << (power))
 # define ALIGN_PS(size, ps)	(((((size) - 1) / (ps)) + 1) * (ps))
 
-# define LASTNODE(brkaddr)	((brkaddr) - sizeof(intptr_t) - (*((intptr_t*)((brkaddr) - sizeof(intptr_t)))))
+# define LASTNODE(brkaddr)	((brkaddr) - sizeof(intptr_t) - sizeof(t_list) - (*((intptr_t*)((void*)((brkaddr) - sizeof(intptr_t))))))
+# define NODESIZE(x)		(((size_t)((x)->next)) - (((size_t)(x)) + sizeof(t_list)))
 
 typedef struct		s_list
 {
@@ -54,5 +55,11 @@ int			add_chunk(t_list *new_chunk, size_t size_chunk);
 */
 
 t_list		*find_free_size_node(t_list *last_node, size_t req_size);
+
+/*
+** chunk.c
+*/
+
+void			reuse_chunk(t_list *chunk, size_t asked_size);
 
 #endif
