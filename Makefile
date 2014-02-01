@@ -8,10 +8,10 @@
 ## Last update Fri Jan 31 19:14:45 2014 Hugues
 ##
 
-SRC		=	src/malloc.c \
-			src/linked_list.c \
-			src/init_chunk.c \
-			src/search_node.c
+SRC		=	malloc.c \
+			linked_list.c \
+			init_chunk.c \
+			search_node.c
 
 CC		=	gcc
 
@@ -26,12 +26,12 @@ CFLAGS		+=	-Wall -Wextra -fPIC
 
 LDFLAGS		+=	-shared
 
-OBJ		=	$(patsubst %.c,${OBJDIR}%.o,$(SRC))
+OBJ		=	$(patsubst %.c,${OBJDIR}%.o, $(SRC))
 
 dummy:= $(shell test -d $(OBJDIR) || mkdir -p $(OBJDIR))
 dummy:= $(shell test -d $(SRCDIR) || mkdir -p $(SRCDIR))
 
-$(OBJDIR)%.o:	%.c
+$(OBJDIR)%.o:	$(patsubst %.c,${SRCDIR}%.c, %.c)
 		@if [ ! -d $(dir $@) ]; then mkdir -p $(dir $@); fi
 		@echo -e "Compiling $< { $(CFLAGS) }" | sed 's/^-e //' \
 		| sed 's/[-a-zA-Z]\+/\x1B[31m&\x1B[0m/g' \
