@@ -28,12 +28,8 @@ void		*malloc(size_t size)
   size = ALIGN(size, CPUP2REGSIZE);
   if (!first_addr)
     {
-      first_addr = sbrk(ALIGN_PS(size + sizeof(t_list) + sizeof(intptr_t), getpagesize()));
-      if (first_addr == ((void*)(-1)))
-        return NULL;
-      init_pages(first_addr, NULL, size);
+      first_addr = init_first_chunk(size);
       result_node = first_addr;
-      result_node->is_free = 0;
     }
   else
     {

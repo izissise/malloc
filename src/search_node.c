@@ -10,14 +10,15 @@
 
 #include "malloc.h"
 
-t_list	*find_free_size_node(t_list *last_node, intptr_t req_size)
+t_list	*find_free_size_node(t_list *last_node, size_t req_size)
 {
   t_list	*tmp_node;
 
   tmp_node = last_node;
   while (tmp_node)
     {
-      if ((tmp_node->next - (tmp_node + sizeof(t_list))) >= req_size)
+      if (tmp_node->is_free
+          && (((size_t)tmp_node->next - ((size_t)tmp_node + sizeof(t_list))) >= req_size))
         return tmp_node;
       tmp_node = tmp_node->prev;
     }

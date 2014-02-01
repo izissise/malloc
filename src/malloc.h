@@ -12,7 +12,7 @@
 # define MALLOC_H_
 
 # include <unistd.h>
-#include <stdio.h> //remove this BAD !
+#include <stdio.h> //remove this, it's BAD !
 
 # define CPUP2REGSIZE 3
 # define ALIGN(size, power)	(((((size) - 1) >> (power)) + 1) << (power))
@@ -39,8 +39,9 @@ void			free(void *ptr);
 **	init_chunk.c
 */
 
-void			init_pages(t_list *first, t_list *prev_chunk, intptr_t size);
-void			init_chunk(t_list *chunk, t_list *prev_chunk, intptr_t size);
+void			init_pages(t_list *first, t_list *prev_chunk, size_t size);
+void			init_chunk(t_list *chunk, t_list *prev_chunk, size_t size);
+void			*init_first_chunk(size_t size);
 
 /*
 **	linked_list.c
@@ -52,6 +53,6 @@ int			add_chunk(t_list *new_chunk, size_t size_chunk);
 ** search_node.c
 */
 
-t_list		*find_free_size_node(t_list *last_node, intptr_t req_size);
+t_list		*find_free_size_node(t_list *last_node, size_t req_size);
 
 #endif
