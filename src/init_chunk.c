@@ -12,21 +12,21 @@
 
 void		init_pages(t_list *first, t_list *prev_chunk, intptr_t size)
 {
-  t_list	*second;
-  intptr_t	*s;
+  intptr_t	f_space_size;
   intptr_t	total_ps;
+  intptr_t	*size_var_addr;
 
-  second = NULL;
   total_ps = ALIGN_PS(size, getpagesize());
-  s = ((intptr_t*)total_ps - sizeof(intptr_t));
-  *s = total_ps - (sizeof(intptr_t) - (sizeof(t_list) * 2) - size);
-  init_chunk(second, first, *s);
+  size_var_addr = (intptr_t*)((intptr_t)first + (total_ps - sizeof(intptr_t)));
+  f_space_size = total_ps - (sizeof(intptr_t) + (sizeof(t_list) * 2) + size);
+  *size_var_addr = f_space_size;
   init_chunk(first, prev_chunk, size);
+  init_chunk(first->next, first, f_space_size);
 }
 
 void		init_chunk(t_list *chunk, t_list *prev_chunk, intptr_t size)
 {
   chunk->prev = prev_chunk;
-  chunk->next = ((t_list*)size + sizeof(t_list));
+  chunk->next = ((void*)chunk + size + sizeof(t_list));
   chunk->is_free = 1;
 }

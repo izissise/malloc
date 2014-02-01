@@ -23,6 +23,9 @@ void		*malloc(size_t size)
   t_list*		last_node;
   t_list*		result_node;
 
+  if (size == 0)
+    return NULL;
+  size = ALIGN(size, CPUP2REGSIZE);
   if (!first_addr)
     {
       first_addr = sbrk(ALIGN_PS(size + sizeof(t_list) + sizeof(intptr_t), getpagesize()));
@@ -39,8 +42,8 @@ void		*malloc(size_t size)
       result_node = find_free_size_node(last_node, size);
       if (result_node == last_node)
         return NULL;
-
     }
+  printf("ptr: %p\n", result_node + sizeof(t_list));
   return (result_node + sizeof(t_list));
 }
 

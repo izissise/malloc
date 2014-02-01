@@ -12,7 +12,9 @@
 # define MALLOC_H_
 
 # include <unistd.h>
+#include <stdio.h> //remove this BAD !
 
+# define CPUP2REGSIZE 3
 # define ALIGN(size, power)	(((((size) - 1) >> (power)) + 1) << (power))
 # define ALIGN_PS(size, ps)	(((((size) - 1) / (ps)) + 1) * (ps))
 
