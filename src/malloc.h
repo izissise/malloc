@@ -5,14 +5,14 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:29:51 2014 jonathan.collinet
-** Last update Fri Jan 31 17:13:35 2014 jonathan.collinet
+** Last update Mon Feb  3 11:59:08 2014 jonathan.collinet
 */
 
 #ifndef MALLOC_H_
 # define MALLOC_H_
 
 # include <unistd.h>
-#include <stdio.h> //remove this, it's BAD !
+# include <stdio.h>
 
 # define CPUP2REGSIZE 3
 # define ALIGN(size, power)	(((((size) - 1) >> (power)) + 1) << (power))
@@ -32,6 +32,7 @@ typedef struct		s_list
 **	malloc.c
 */
 
+void			*get_first_addr();
 void			*malloc(size_t size);
 void			*realloc(void *ptr, size_t size);
 void			free(void *ptr);
@@ -61,5 +62,11 @@ t_list		*find_free_size_node(t_list *last_node, size_t req_size);
 */
 
 void			reuse_chunk(t_list *chunk, size_t asked_size);
+
+/*
+** show_alloc_mem.c
+*/
+
+void		show_alloc_mem();
 
 #endif

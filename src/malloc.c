@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:45:34 2014 jonathan.collinet
-** Last update Fri Jan 31 17:40:23 2014 jonathan.collinet
+** Last update Mon Feb  3 11:59:00 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -16,9 +16,15 @@
 ** else we try to use an already existing one
 */
 
+static void*	first_addr = NULL;
+
+void		*get_first_addr()
+{
+  return (first_addr);
+}
+
 void		*malloc(size_t size)
 {
-  static void*	first_addr = NULL;
   void*		last_addr;
   t_list*		last_node;
   t_list*		result_node;

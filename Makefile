@@ -5,14 +5,15 @@
 ## Login   <moriss_h@epitech.net>
 ##
 ## Started on  Sun Jun  9 03:35:24 2013 Hugues
-## Last update Fri Jan 31 19:14:45 2014 Hugues
+## Last update Mon Feb  3 11:15:48 2014 jonathan.collinet
 ##
 
 SRC		=	malloc.c \
 			linked_list.c \
 			init_chunk.c \
 			search_node.c \
-			chunk.c
+			chunk.c \
+			show_alloc_mem.c
 
 CC		=	gcc
 
