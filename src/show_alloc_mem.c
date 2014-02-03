@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 ** 
 ** Started on  Mon Feb  3 11:03:50 2014 jonathan.collinet
-** Last update Mon Feb  3 17:37:26 2014 jonathan.collinet
+** Last update Mon Feb  3 21:05:02 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -16,7 +16,7 @@ void		show_alloc_mem()
   void		*bweak;
   int		i;
 
-  i = 0;
+  i = 1;
   bweak = sbrk(0);
   printf("break : %p\n", bweak);
   if (get_first_addr())
@@ -29,7 +29,7 @@ void		show_alloc_mem()
 	}
       while(i)
 	{
-	  printf("%p - %p : %lu bytes\n", node, node->next, node->size);
+	  printf("%p - %p : %lu bytes\n", node, (void*)(node + node->size), node->size);
 	  node = node->next;
 	  --i;
 	}

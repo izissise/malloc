@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 ** 
 ** Started on  Mon Feb  3 11:18:40 2014 jonathan.collinet
-** Last update Mon Feb  3 18:03:09 2014 jonathan.collinet
+** Last update Mon Feb  3 18:34:39 2014 jonathan.collinet
 */
 
 #include "../src/malloc.h"
@@ -13,6 +13,9 @@
 int			main()
 {
   show_alloc_mem();
-  malloc(8121);
+  malloc(4025);
   show_alloc_mem();
+  malloc(1);
+  show_alloc_mem();
+  return (0);
 }
