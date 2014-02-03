@@ -5,10 +5,11 @@
 ## Login   <collin_b@epitech.net>
 ## 
 ## Started on  Mon Feb  3 11:22:47 2014 jonathan.collinet
-## Last update Mon Feb  3 17:41:13 2014 jonathan.collinet
+## Last update Mon Feb  3 20:50:02 2014 Hugues
 ##
 
 SRC		=		main.c		\
+				dump.c
 
 OBJ		=		$(SRC:.c=.o)
 
