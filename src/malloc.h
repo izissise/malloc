@@ -21,6 +21,13 @@
 # define LASTNODE(brkaddr)	((brkaddr) - sizeof(intptr_t) - sizeof(t_list) - (*((intptr_t*)((void*)((brkaddr) - sizeof(intptr_t))))))
 # define NODESIZE(x)		(((size_t)((x)->next)) - (((size_t)(x)) + sizeof(t_list)))
 
+# define SETFLAG(x, y) ((x) |= (y))
+# define UNSETFLAG(x, y) ((x) &= ~(y))
+# define SWITCHFLAG(x, y) ((x) ^= (y))
+# define GETFLAG(x, y) ((x) & (y))
+# define FLAGPOS(x) (1 << (x))
+
+
 typedef struct		s_list
 {
   struct s_list		*prev;
