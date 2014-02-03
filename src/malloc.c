@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:45:34 2014 jonathan.collinet
-** Last update Mon Feb  3 13:12:12 2014 jonathan.collinet
+** Last update Mon Feb  3 13:46:12 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -28,9 +28,11 @@ void		*malloc(size_t size)
   void*		last_addr;
   t_list*	last_node;
   t_list*	result_node;
+  size_t	real_size;
 
   if (size == 0)
-    return NULL;
+    return (NULL);
+  real_size = size;
   size = ALIGN(size, CPUP2REGSIZE);
   if (!first_addr)
     {
@@ -42,11 +44,12 @@ void		*malloc(size_t size)
       last_addr = sbrk(0);
       last_node = LASTNODE(last_addr);
       if ((result_node = find_free_size_node(last_node, size)) == NULL)
-        return NULL;
+        return (NULL);
       reuse_chunk(result_node, size);
     }
   /* printf("node: %p ptr: %p next: %p\n", result_node, (void*)result_node + sizeof(t_list), result_node->next); */
   result_node->is_free = 0;
+  result_node->size = real_size;
   return ((void*)result_node + sizeof(t_list));
 }
 

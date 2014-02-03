@@ -5,15 +5,15 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 17:13:01 2014 jonathan.collinet
-** Last update Fri Jan 31 17:43:02 2014 jonathan.collinet
+** Last update Mon Feb  3 13:57:18 2014 jonathan.collinet
 */
 
 #include "malloc.h"
 
 void		init_pages(t_list *first, t_list *prev_chunk, size_t size)
 {
-  size_t		f_space_size;
-  size_t		total_ps;
+  size_t	f_space_size;
+  size_t	total_ps;
   intptr_t	*size_var_addr;
 
   total_ps = ALIGN_PS(size, getpagesize());
@@ -29,6 +29,7 @@ void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size)
   chunk->prev = prev_chunk;
   chunk->next = ((void*)chunk + size + sizeof(t_list));
   chunk->is_free = 1;
+  chunk->size = size;
 }
 
 void		*init_first_chunk(size_t size)
@@ -37,7 +38,7 @@ void		*init_first_chunk(size_t size)
 
   first_addr = sbrk(ALIGN_PS(size + sizeof(t_list) + sizeof(intptr_t), getpagesize()));
   if (first_addr == ((void*)(-1)))
-    return NULL;
+    return (NULL);
   init_pages(first_addr, NULL, size);
   return (first_addr);
 }

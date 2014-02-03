@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:29:51 2014 jonathan.collinet
-** Last update Mon Feb  3 13:17:37 2014 jonathan.collinet
+** Last update Mon Feb  3 13:31:17 2014 jonathan.collinet
 */
 
 #ifndef MALLOC_H_
@@ -26,7 +26,6 @@
 # define SWITCHFLAG(x, y) ((x) ^= (y))
 # define GETFLAG(x, y) ((x) & (y))
 # define FLAGPOS(x) (1 << (x))
-
 
 typedef struct		s_list
 {
