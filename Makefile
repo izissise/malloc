@@ -18,7 +18,8 @@ CC		=	gcc
 
 RM		=	rm -f
 
-NAME		=	libmalloc.so
+SYMLINK	=	libmy_malloc.so
+NAME		=	libmy_malloc_$(HOSTTYPE).so
 
 OBJDIR		=	obj/
 SRCDIR		=	src/
@@ -45,6 +46,7 @@ $(NAME):	$(OBJ)
 		@echo -e "Linking $@ { $(LDFLAGS) }" | sed 's/^-e //' \
 		| sed 's/[-a-zA-Z]\+/\x1B[34m&\x1B[0m/g'
 		@$(CC) $(LDFLAGS) -o $(NAME) $(OBJ)
+		@ln -s $(NAME) $(SYMLINK)
 
 all:	$(NAME)
 
@@ -57,6 +59,7 @@ fclean:	clean
 	@echo -e "Removing ${NAME} !" | sed 's/^-e //' \
 	| sed 's/[-a-zA-Z]\+/\x1B[36m&\x1B[0m/g'
 	@$(RM) $(NAME)
+	@$(RM) $(SYMLINK)
 
 re:	fclean all
 
