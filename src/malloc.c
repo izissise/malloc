@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:45:34 2014 jonathan.collinet
-** Last update Mon Feb  3 21:06:02 2014 jonathan.collinet
+** Last update Mon Feb  3 22:52:47 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -44,8 +44,9 @@ void		*malloc(size_t size)
       last_addr = sbrk(0);
       last_node = LASTNODE(last_addr);
       if ((result_node = find_free_size_node(last_node, size)) == NULL)
-        return add_page(size);
-      reuse_chunk(result_node, size);
+        result_node = add_page(size);
+      else
+	reuse_chunk(result_node, size);
     }
   result_node->is_free = 0;
   result_node->size = real_size;

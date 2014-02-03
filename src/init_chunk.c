@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 17:13:01 2014 jonathan.collinet
-** Last update Mon Feb  3 17:57:26 2014 jonathan.collinet
+** Last update Mon Feb  3 22:54:39 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -49,9 +49,8 @@ void		*add_page(size_t size)
   t_list	*prev_last_node;
 
   page_start = sbrk(ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(intptr_t), sysconf(_SC_PAGESIZE)));
-  printf("page start %p\n", page_start);
   prev_last_node = LASTNODE(page_start);
-  prev_last_node->next += sizeof(intptr_t);
+  prev_last_node->next = ((void*)prev_last_node->next) + sizeof(intptr_t);
   init_pages(page_start, prev_last_node, size);
   return (page_start);
 }

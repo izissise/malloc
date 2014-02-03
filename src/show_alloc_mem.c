@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 ** 
 ** Started on  Mon Feb  3 11:03:50 2014 jonathan.collinet
-** Last update Mon Feb  3 21:05:02 2014 jonathan.collinet
+** Last update Mon Feb  3 22:49:00 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -29,7 +29,8 @@ void		show_alloc_mem()
 	}
       while(i)
 	{
-	  printf("%p - %p : %lu bytes\n", node, (void*)(node + node->size), node->size);
+	  if (!node->is_free)
+	    printf("%p - %p : %lu bytes\n", node, (void*)(node + node->size), node->size);
 	  node = node->next;
 	  --i;
 	}
