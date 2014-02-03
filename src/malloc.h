@@ -51,6 +51,7 @@ void			free(void *ptr);
 void			init_pages(t_list *first, t_list *prev_chunk, size_t size);
 void			init_chunk(t_list *chunk, t_list *prev_chunk, size_t size);
 void			*init_first_chunk(size_t size);
+void			*add_page(size_t size);
 
 /*
 **	linked_list.c

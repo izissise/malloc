@@ -16,7 +16,7 @@ void		init_pages(t_list *first, t_list *prev_chunk, size_t size)
   size_t	total_ps;
   intptr_t	*size_var_addr;
 
-  total_ps = ALIGN_PS(size, getpagesize());
+  total_ps = ALIGN_PS(size, sysconf(_SC_PAGESIZE));
   size_var_addr = (intptr_t*)((intptr_t)first + (total_ps - sizeof(intptr_t)));
   f_space_size = total_ps - (sizeof(intptr_t) + (sizeof(t_list) * 2) + size);
   *size_var_addr = f_space_size;
@@ -36,9 +36,22 @@ void		*init_first_chunk(size_t size)
 {
   t_list		*first_addr;
 
-  first_addr = sbrk(ALIGN_PS(size + sizeof(t_list) + sizeof(intptr_t), getpagesize()));
+  first_addr = sbrk(ALIGN_PS(size + sizeof(t_list) + sizeof(intptr_t), sysconf(_SC_PAGESIZE)));
   if (first_addr == ((void*)(-1)))
     return (NULL);
   init_pages(first_addr, NULL, size);
   return (first_addr);
+}
+
+void		*add_page(size_t size)
+{
+  void	*page_start;
+  t_list	*prev_last_node;
+
+  page_start = sbrk(ALIGN_PS(size + sizeof(t_list) + sizeof(intptr_t), sysconf(_SC_PAGESIZE)));
+  printf("page start %p\n", page_start);
+  prev_last_node = LASTNODE(page_start);
+  prev_last_node->next += sizeof(intptr_t);
+  init_pages(page_start, prev_last_node, size);
+  return (page_start);
 }

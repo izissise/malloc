@@ -44,7 +44,7 @@ void		*malloc(size_t size)
       last_addr = sbrk(0);
       last_node = LASTNODE(last_addr);
       if ((result_node = find_free_size_node(last_node, size)) == NULL)
-        return (NULL);
+        return add_page(size);
       reuse_chunk(result_node, size);
     }
   /* printf("node: %p ptr: %p next: %p\n", result_node, (void*)result_node + sizeof(t_list), result_node->next); */
