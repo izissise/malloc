@@ -5,7 +5,7 @@
 ## Login   <moriss_h@epitech.net>
 ##
 ## Started on  Sun Jun  9 03:35:24 2013 Hugues
-## Last update Mon Feb  3 11:15:48 2014 jonathan.collinet
+## Last update Mon Feb  3 13:20:59 2014 Hugues
 ##
 
 SRC		=	malloc.c \
@@ -47,7 +47,7 @@ $(NAME):	$(OBJ)
 		@echo -e "Linking $@ { $(LDFLAGS) }" | sed 's/^-e //' \
 		| sed 's/[-a-zA-Z]\+/\x1B[34m&\x1B[0m/g'
 		@$(CC) $(LDFLAGS) -o $(NAME) $(OBJ)
-		@ln -s $(NAME) $(SYMLINK)
+		@ln -f -s $(NAME) $(SYMLINK)
 
 all:	$(NAME)
 
