@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:29:51 2014 jonathan.collinet
-** Last update Mon Feb  3 11:59:08 2014 jonathan.collinet
+** Last update Mon Feb  3 13:17:37 2014 jonathan.collinet
 */
 
 #ifndef MALLOC_H_
@@ -26,6 +26,7 @@ typedef struct		s_list
   struct s_list		*prev;
   struct s_list		*next;
   unsigned long		is_free;
+  size_t		size;
 }			t_list;
 
 /*

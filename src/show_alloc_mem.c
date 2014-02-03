@@ -5,28 +5,24 @@
 ** Login   <collin_b@epitech.net>
 ** 
 ** Started on  Mon Feb  3 11:03:50 2014 jonathan.collinet
-** Last update Mon Feb  3 12:02:48 2014 jonathan.collinet
+** Last update Mon Feb  3 13:12:09 2014 jonathan.collinet
 */
 
 #include "malloc.h"
 
 void		show_alloc_mem()
 {
-  t_list	*last_node;
-  void		*brek;
+  t_list	*node;
+  void		*bweak;
 
-  brek = sbrk(0);
-  printf("break : %p\n", brek);
-  if (get_first_addr())
-    {
-      last_node = LASTNODE(brek);
-      printf("%p\n", last_node);
-      while (last_node)
-	{
-	  printf("%p - %p : %u bytes\n", last_node, LASTNODE(last_node), (unsigned int)(last_node - LASTNODE(last_node)));
-	  last_node = last_node->prev;
-	}
-    }
+  bweak = sbrk(0);
+  printf("break : %p\n", bweak);
+  if ((node = get_first_addr()))
+    while (node)
+      {
+	printf("%p - %p : %lu bytes\n", node, node->next, NODESIZE(node));
+	node = node->next;
+      }
   else
     printf("No memory allocated in our program.\n");
 }
