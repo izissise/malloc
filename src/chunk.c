@@ -29,6 +29,6 @@ void		update_last_size(t_list *prev_last_node)
 
   tmp = prev_last_node->next;
   size = ((intptr_t*)(tmp->next));
-  *size = ((void*)size + sizeof(intptr_t)) - (void*)tmp;
+  *size = ((void*)size + sizeof(intptr_t)) - (void*)tmp + sizeof(t_list);
 }
 

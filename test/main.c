@@ -14,15 +14,21 @@ void hexdump(void *mem, unsigned int len);
 
 int			main()
 {
+  void *end;
   void* ptr = sbrk(0);
-  show_alloc_mem();
+
   malloc(50);
+  end = sbrk(0);
+
   show_alloc_mem();
   malloc(60);
+  end = sbrk(0);
   show_alloc_mem();
-  void *end = sbrk(0);
+  hexdump(ptr, end - ptr);
+
   malloc(50);
   show_alloc_mem();
-  /* hexdump(ptr, end - ptr); */
+  end = sbrk(0);
+
   return 0;
 }

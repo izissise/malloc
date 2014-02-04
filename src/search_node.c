@@ -19,7 +19,7 @@ t_list	*find_free_size_node(t_list *last_node, size_t req_size)
     {
       if (tmp_node->is_free
           && (NODESIZE(tmp_node) >= req_size))
-	return tmp_node;
+        return tmp_node;
       tmp_node = tmp_node->prev;
     }
   return (NULL);
