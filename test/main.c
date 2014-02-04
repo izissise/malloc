@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Mon Feb  3 11:18:40 2014 jonathan.collinet
-** Last update Mon Feb  3 22:41:21 2014 jonathan.collinet
+** Last update Tue Feb  4 11:43:52 2014 Hugues
 */
 
 #include "../src/malloc.h"
@@ -16,12 +16,12 @@ int			main()
 {
   void* ptr = sbrk(0);
   show_alloc_mem();
-  malloc(4024);
+  malloc(50);
   show_alloc_mem();
-  malloc(1);
+  malloc(60);
   show_alloc_mem();
   void *end = sbrk(0);
-  malloc(4096);
+  malloc(50);
   show_alloc_mem();
   /* hexdump(ptr, end - ptr); */
   return 0;

@@ -12,6 +12,7 @@
 # define MALLOC_H_
 
 # include <unistd.h>
+# include <string.h>
 # include <stdio.h>
 
 # define CPUP2REGSIZE 3
@@ -70,6 +71,7 @@ t_list		*find_free_size_node(t_list *last_node, size_t req_size);
 */
 
 void			reuse_chunk(t_list *chunk, size_t asked_size);
+void			update_last_size(t_list *prev_last_node);
 
 /*
 ** show_alloc_mem.c

@@ -46,7 +46,11 @@ void		*malloc(size_t size)
       if ((result_node = find_free_size_node(last_node, size)) == NULL)
         result_node = add_page(size);
       else
-	reuse_chunk(result_node, size);
+        {
+          reuse_chunk(result_node, size);
+          if (result_node == last_node)
+            update_last_size(last_node);
+        }
     }
   result_node->is_free = 0;
   result_node->size = real_size;
@@ -55,9 +59,11 @@ void		*malloc(size_t size)
 
 void		*realloc(void *ptr, size_t size)
 {
-  (void)ptr;
-  (void)size;
-  return (ptr);
+  void	*nptr;
+
+  nptr = malloc(size);
+  memcpy(nptr, ptr, size);
+  return (nptr);
 }
 
 void		free(void *ptr)
