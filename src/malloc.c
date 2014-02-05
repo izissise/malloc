@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:45:34 2014 jonathan.collinet
-** Last update Wed Feb  5 16:52:30 2014 jonathan.collinet
+** Last update Wed Feb  5 16:59:07 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -88,5 +88,6 @@ void		free(void *ptr)
     {
       cur_node->next = cur_node->next->next;
       cur_node->next->prev = cur_node;
+      cur_node->size = NODESIZE(cur_node);
     }
 }
