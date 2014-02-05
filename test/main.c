@@ -20,15 +20,41 @@ int			main()
   malloc(50);
   end = sbrk(0);
 
-  show_alloc_mem();
+  //show_alloc_mem();
   malloc(60);
   end = sbrk(0);
-  show_alloc_mem();
+  //hexdump(ptr, end - ptr);
+  //show_alloc_mem();
+
+  malloc(50);
+  malloc(50);
+  malloc(50);
+  malloc(50);
+  malloc(50);
+  malloc(50);
+  malloc(50);
+  malloc(50);
+  malloc(50);
+  malloc(50);
+  hexdump(ptr, end - ptr);
+  /*//show_alloc_mem();
+  end = sbrk(0);
+  //hexdump(ptr, end - ptr);
+
+  malloc(50);
+  //hexdump(ptr, end - ptr);
+
+  malloc(50);
   hexdump(ptr, end - ptr);
 
   malloc(50);
-  show_alloc_mem();
-  end = sbrk(0);
+  hexdump(ptr, end - ptr);
+
+  malloc(50);
+  hexdump(ptr, end - ptr);
+
+  malloc(50);
+  hexdump(ptr, end - ptr);*/
 
   return 0;
 }

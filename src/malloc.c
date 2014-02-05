@@ -54,6 +54,7 @@ void		*malloc(size_t size)
     }
   result_node->is_free = 0;
   result_node->size = real_size;
+  printf("Last node is %p\n", LASTNODE(sbrk(0)));
   return ((void*)result_node + sizeof(t_list));
 }
 

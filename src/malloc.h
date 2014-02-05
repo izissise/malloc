@@ -19,7 +19,7 @@
 # define ALIGN(size, power)	(((((size) - 1) >> (power)) + 1) << (power))
 # define ALIGN_PS(size, ps)	(((((size) - 1) / (ps)) + 1) * (ps))
 
-# define LASTNODE(brkaddr)	((brkaddr) - sizeof(intptr_t) - sizeof(t_list) - (*((intptr_t*)((void*)((brkaddr) - sizeof(intptr_t))))))
+# define LASTNODE(brkaddr)	((*(t_list**)(((void*)brkaddr) - sizeof(t_list*))))
 # define NODESIZE(x)		(((size_t)((x)->next)) - (((size_t)(x)) + sizeof(t_list)))
 
 # define SETFLAG(x, y) ((x) |= (y))
