@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Mon Feb  3 11:18:40 2014 jonathan.collinet
-** Last update Wed Feb  5 16:57:59 2014 jonathan.collinet
+** Last update Wed Feb  5 18:58:11 2014 jonathan.collinet
 */
 
 #include "../src/malloc.h"
@@ -60,6 +60,13 @@ int			main()
   void* ptr3;
   printf("yolo\n");
 
+  ptr3 = malloc(50);
+  ptr3 = malloc(50);
+  ptr3 = malloc(50);
+  ptr3 = malloc(50);
+  ptr3 = malloc(50);
+  ptr3 = malloc(50);
+  ptr3 = malloc(50);
   ptr3 = malloc(50);
   show_alloc_mem();
   free(ptr3);
