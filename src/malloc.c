@@ -90,5 +90,6 @@ void		free(void *ptr)
     {
       cur_node->next = cur_node->next->next;
       cur_node->next->prev = cur_node;
+      cur_node->size = NODESIZE(cur_node);
     }
 }
