@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Mon Feb  3 11:18:40 2014 jonathan.collinet
-** Last update Wed Feb  5 18:58:11 2014 jonathan.collinet
+** Last update Wed Feb  5 22:03:01 2014 jonathan.collinet
 */
 
 #include "../src/malloc.h"
@@ -20,7 +20,6 @@ void reset_malloc()
 
 int			main()
 {
-
   void *end;
   void* ptr = sbrk(0);
 
@@ -82,6 +81,7 @@ int			main()
   show_alloc_mem();
   free(ptr3);
   show_alloc_mem();*/
+
   return 0;
 
 }
