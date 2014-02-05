@@ -9,7 +9,6 @@
 ##
 
 SRC		=	malloc.c \
-			linked_list.c \
 			init_chunk.c \
 			search_node.c \
 			chunk.c \

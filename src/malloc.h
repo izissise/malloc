@@ -15,7 +15,8 @@
 # include <string.h>
 # include <stdio.h>
 
-# define CPUP2REGSIZE 3
+# define PAGESIZE			getpagesize()
+# define CPUP2REGSIZE		3
 # define ALIGN(size, power)	(((((size) - 1) >> (power)) + 1) << (power))
 # define ALIGN_PS(size, ps)	(((((size) - 1) / (ps)) + 1) * (ps))
 
@@ -53,12 +54,6 @@ void			init_pages(t_list *first, t_list *prev_chunk, size_t size);
 void			init_chunk(t_list *chunk, t_list *prev_chunk, size_t size);
 void			*init_first_chunk(size_t size);
 void			*add_page(size_t size);
-
-/*
-**	linked_list.c
-*/
-
-int			add_chunk(t_list *new_chunk, size_t size_chunk);
 
 /*
 ** search_node.c

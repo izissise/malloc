@@ -16,7 +16,7 @@ void		init_pages(t_list *first, t_list *prev_chunk, size_t size)
   size_t		f_space_size;
   t_list		**last_list;
 
-  total_ps = ALIGN_PS((size + sizeof(t_list*) + sizeof(t_list) * 2), sysconf(_SC_PAGESIZE));
+  total_ps = ALIGN_PS((size + sizeof(t_list*) + sizeof(t_list) * 2), PAGESIZE);
   last_list = (t_list**)((void*)first + (total_ps - sizeof(t_list*)));
   f_space_size = total_ps - (sizeof(t_list*) + (sizeof(t_list) * 2) + size);
   init_chunk(first, prev_chunk, size);
@@ -36,7 +36,7 @@ void		*init_first_chunk(size_t size)
 {
   t_list	*first_addr;
 
-  first_addr = sbrk(ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(t_list*), sysconf(_SC_PAGESIZE)));
+  first_addr = sbrk(ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(t_list*), PAGESIZE));
   if (first_addr == ((void*)(-1)))
     return (NULL);
   init_pages(first_addr, NULL, size);
@@ -48,7 +48,7 @@ void		*add_page(size_t size)
   void		*page_start;
   t_list	*prev_last_node;
 
-  page_start = sbrk(ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(t_list*), sysconf(_SC_PAGESIZE)));
+  page_start = sbrk(ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(t_list*), PAGESIZE));
   prev_last_node = LASTNODE(page_start);
   prev_last_node->next = ((void*)prev_last_node->next) + sizeof(t_list*);
   init_pages(page_start, prev_last_node, size);
