@@ -46,11 +46,11 @@ int			main()
 
   reset_malloc();
 
-  void* ptr3;
+/*  void* ptr3;
 
   ptr3 = malloc(50);
   show_alloc_mem();
   free(ptr3);
-  show_alloc_mem();
+  show_alloc_mem();*/
   return 0;
 }

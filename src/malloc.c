@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:45:34 2014 jonathan.collinet
-** Last update Wed Feb  5 16:52:30 2014 jonathan.collinet
+** Last update Wed Feb  5 17:31:01 2014 Hugues
 */
 
 #include "malloc.h"
@@ -75,6 +75,8 @@ void		free(void *ptr)
   t_list	*last_node;
   void		*bweak;
 
+  if (!ptr)
+    return ;
   cur_node = ptr - sizeof(t_list);
   if (cur_node->prev && cur_node->prev->is_free == 1)
     {
