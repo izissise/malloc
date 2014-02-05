@@ -79,6 +79,7 @@ void		free(void *ptr)
   bweak = sbrk(0);
   last_node = LASTNODE(bweak);
   cur_node = ptr - sizeof(t_list);
+  cur_node->is_free = 1;
   if (cur_node->prev && cur_node->prev->is_free == 1)
     {
       cur_node->prev->next = cur_node->next;
@@ -89,6 +90,5 @@ void		free(void *ptr)
     {
       cur_node->next = cur_node->next->next;
       cur_node->next->prev = cur_node;
-      cur_node->size = NODESIZE(cur_node);
     }
 }

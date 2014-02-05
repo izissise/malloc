@@ -40,14 +40,25 @@ int			main()
 
   reset_malloc();
 
-  malloc(4096 * 2 - 64 - 8); // should be 3 page
+  void* kqj = malloc(4096 * 2 - 64 - 8); // should be 3 page
+  free(kqj);
   malloc(4096 * 2 - 64 - 8); // should be 3 page
   malloc(1); // should be two page
   show_alloc_mem();
 
   reset_malloc();
 
+  void* ptra = malloc(5000);
+  void* ptrb = malloc(3600);
+  void* ptrc = malloc(200);
 
+	show_alloc_mem();
+  free(ptra);
+  free(ptrb);
+  free(ptrc);
+  show_alloc_mem();
+
+/*
   malloc(500000); // should be 3 page
   malloc(4500); // should be 3 page
   malloc(4500); // should be 3 page
@@ -70,7 +81,7 @@ int			main()
   ptr3 = malloc(50);
   show_alloc_mem();
   free(ptr3);
-  show_alloc_mem();
+  show_alloc_mem();*/
   return 0;
 
 }
