@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Mon Feb  3 11:18:40 2014 jonathan.collinet
-** Last update Tue Feb  4 11:43:52 2014 Hugues
+** Last update Wed Feb  5 14:13:19 2014 jonathan.collinet
 */
 
 #include "../src/malloc.h"
@@ -14,47 +14,19 @@ void hexdump(void *mem, unsigned int len);
 
 int			main()
 {
-  void *end;
-  void* ptr = sbrk(0);
-
   malloc(50);
-  end = sbrk(0);
-
-  //show_alloc_mem();
-  malloc(60);
-  end = sbrk(0);
-  //hexdump(ptr, end - ptr);
-  //show_alloc_mem();
-
+  show_alloc_mem();
   malloc(50);
+  show_alloc_mem();
   malloc(50);
+  show_alloc_mem();
   malloc(50);
+  show_alloc_mem();
+  malloc(5000);
+  show_alloc_mem();
   malloc(50);
+  show_alloc_mem();
   malloc(50);
-  malloc(50);
-  malloc(50);
-  malloc(50);
-  malloc(50);
-  malloc(50);
-  hexdump(ptr, end - ptr);
-  /*//show_alloc_mem();
-  end = sbrk(0);
-  //hexdump(ptr, end - ptr);
-
-  malloc(50);
-  //hexdump(ptr, end - ptr);
-
-  malloc(50);
-  hexdump(ptr, end - ptr);
-
-  malloc(50);
-  hexdump(ptr, end - ptr);
-
-  malloc(50);
-  hexdump(ptr, end - ptr);
-
-  malloc(50);
-  hexdump(ptr, end - ptr);*/
-
+  show_alloc_mem();
   return 0;
 }
