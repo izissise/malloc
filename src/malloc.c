@@ -60,11 +60,13 @@ void		*malloc(size_t size)
 void		*realloc(void *ptr, size_t size)
 {
   void	*nptr;
+  size_t	rsize;
 
   if (!ptr)
     return (malloc(size));
   if (!CHECKVALIDNODE(ptr))
     return (NULL);
+  rsize = NODEREALSIZE((t_list*)ptr);
 
 
 
