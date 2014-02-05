@@ -61,10 +61,14 @@ void		*realloc(void *ptr, size_t size)
 {
   void	*nptr;
 
-  nptr = malloc(size);
   if (!ptr)
-    return (nptr);
-  memcpy(nptr, ptr, NODESIZE((t_list*)((((void*)ptr) - sizeof(t_list)))));
+    return (malloc(size));
+  if (!CHECKVALIDNODE(ptr))
+    return (NULL);
+
+
+
+  memcpy(nptr, ptr, NODESIZE((t_list*)(((void*)ptr) - sizeof(t_list))));
   return (nptr);
 }
 
@@ -74,7 +78,7 @@ void		free(void *ptr)
   t_list	*last_node;
   void		*bweak;
 
-  if (!ptr)
+  if (!ptr || !CHECKVALIDNODE(ptr))
     return ;
   bweak = sbrk(0);
   last_node = LASTNODE(bweak);
@@ -91,4 +95,13 @@ void		free(void *ptr)
       cur_node->next = cur_node->next->next;
       cur_node->next->prev = cur_node;
     }
+}
+
+void		*calloc(size_t nmemb, size_t size)
+{
+  void		*ptr;
+
+  if ((ptr = malloc(nmemb * size)) != NULL)
+    memset(ptr, 0, nmemb * size);
+  return (ptr);
 }

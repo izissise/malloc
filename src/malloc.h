@@ -22,6 +22,7 @@
 
 # define LASTNODE(brkaddr)	((*(t_list**)(((void*)brkaddr) - sizeof(t_list*))))
 # define NODESIZE(x)		(((size_t)((x)->next)) - (((size_t)(x)) + sizeof(t_list)))
+# define CHECKVALIDNODE(x)	((x))
 
 # define SETFLAG(x, y) ((x) |= (y))
 # define UNSETFLAG(x, y) ((x) &= ~(y))
@@ -45,6 +46,7 @@ void			**get_first_addr();
 void			*malloc(size_t size);
 void			*realloc(void *ptr, size_t size);
 void			free(void *ptr);
+void			*calloc(size_t nmemb, size_t size);
 
 /*
 **	init_chunk.c
