@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Mon Feb  3 11:18:40 2014 jonathan.collinet
-** Last update Wed Feb  5 18:58:11 2014 jonathan.collinet
+** Last update Wed Feb  5 22:03:01 2014 jonathan.collinet
 */
 
 #include "../src/malloc.h"
@@ -20,57 +20,13 @@ void reset_malloc()
 
 int			main()
 {
-
+  printf("ON DISPLAY LES FREE !!!\n");
   void *end;
   void* ptr = sbrk(0);
 
-  malloc(4096 - 64 - 8); // should be one page
+  ptr = malloc(50000);
   show_alloc_mem();
-
-  reset_malloc();
-
-  malloc(4096 - 64 - 8 + 1); // should be two page
-  show_alloc_mem();
-
-  reset_malloc();
-
-  malloc(4096 - 64 - 8); // should be two page
-  malloc(1); // should be two page
-  show_alloc_mem();
-
-  reset_malloc();
-
-  malloc(4096 * 2 - 64 - 8); // should be 3 page
-  malloc(4096 * 2 - 64 - 8); // should be 3 page
-  malloc(1); // should be two page
-  show_alloc_mem();
-
-  reset_malloc();
-
-
-  malloc(500000); // should be 3 page
-  malloc(4500); // should be 3 page
-  malloc(4500); // should be 3 page
-  malloc(4500); // should be 3 page
-  malloc(1); // should be two page
-  show_alloc_mem();
-
-  reset_malloc();
-
-  void* ptr3;
-  printf("yolo\n");
-
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  show_alloc_mem();
-  free(ptr3);
-  show_alloc_mem();
+  free(ptr);
   return 0;
 
 }
