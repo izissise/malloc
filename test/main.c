@@ -12,21 +12,59 @@
 
 void hexdump(void *mem, unsigned int len);
 
+void reset_malloc()
+{
+  void **first_addr = get_first_addr();
+  *first_addr = NULL;
+}
+
 int			main()
 {
+  void *end;
+  void* ptr = sbrk(0);
+
+  malloc(4096 - 64 - 8); // should be one page
+  show_alloc_mem();
+
+  reset_malloc();
+
+  malloc(4096 - 64 - 8 + 1); // should be two page
+  show_alloc_mem();
+
+  reset_malloc();
+
+  malloc(4096 - 64 - 8); // should be two page
+  malloc(1); // should be two page
+  show_alloc_mem();
+
+  reset_malloc();
+
+  malloc(4096 * 2 - 64 - 8); // should be 3 page
+  malloc(4096 * 2 - 64 - 8); // should be 3 page
+  malloc(1); // should be two page
+  show_alloc_mem();
+
+  reset_malloc();
+
+
+
   malloc(50);
   show_alloc_mem();
-  malloc(50);
-  show_alloc_mem();
-  malloc(50);
-  show_alloc_mem();
-  malloc(50);
-  show_alloc_mem();
-  malloc(5000);
-  show_alloc_mem();
-  malloc(50);
-  show_alloc_mem();
-  malloc(50);
-  show_alloc_mem();
+  /*
+
+    malloc(50);
+    show_alloc_mem();
+    malloc(50);
+    show_alloc_mem();
+    malloc(5000);
+    show_alloc_mem();
+    malloc(50);
+    show_alloc_mem();
+    malloc(50);
+    show_alloc_mem();
+
+    end = sbrk(0);
+    hexdump(ptr, end - ptr);*/
+
   return 0;
 }

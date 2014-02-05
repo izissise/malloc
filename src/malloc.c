@@ -18,9 +18,9 @@
 
 static void*	first_addr = NULL;
 
-void		*get_first_addr()
+void		**get_first_addr()
 {
-  return (first_addr);
+  return (&first_addr);
 }
 
 void		*malloc(size_t size)
@@ -54,7 +54,6 @@ void		*malloc(size_t size)
     }
   result_node->is_free = 0;
   result_node->size = real_size;
-  printf("Last node is %p\n", LASTNODE(sbrk(0)));
   return ((void*)result_node + sizeof(t_list));
 }
 
@@ -62,9 +61,12 @@ void		*realloc(void *ptr, size_t size)
 {
   void	*nptr;
 
-  nptr = malloc(size);
-  memcpy(nptr, ptr, size);
-  return (nptr);
+  (void)size;
+  (void)nptr;
+  (void)ptr;
+  //nptr = malloc(size);
+  //memcpy(nptr, ptr, size);
+  return (NULL);
 }
 
 void		free(void *ptr)

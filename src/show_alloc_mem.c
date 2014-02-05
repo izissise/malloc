@@ -1,9 +1,9 @@
 /*
 ** show_alloc_mem.c for c in /home/collin_b/project/malloc/PSU_2013_malloc/src
-** 
+**
 ** Made by jonathan.collinet
 ** Login   <collin_b@epitech.net>
-** 
+**
 ** Started on  Mon Feb  3 11:03:50 2014 jonathan.collinet
 ** Last update Wed Feb  5 14:09:16 2014 jonathan.collinet
 */
@@ -23,17 +23,17 @@ void		show_alloc_mem()
     {
       node = LASTNODE(bweak);
       while (node->prev)
-	{
-	  node = node->prev;
-	  ++i;
-	}
+        {
+          node = node->prev;
+          ++i;
+        }
       while(i)
-	{
-	  if (!node->is_free)
-	    printf("%p - %p : %lu bytes\n", ((void*)node) + sizeof(t_list), (((void*)node) + node->size) + sizeof(t_list), node->size);
-	  node = node->next;
-	  --i;
-	}
+        {
+          if (!node->is_free || 1)
+            printf("%p - %p : %lu bytes\n", ((void*)node) + sizeof(t_list), (((void*)node) + node->size) + sizeof(t_list), node->size);
+          node = node->next;
+          --i;
+        }
     }
   else
     printf("No memory allocated in our program.\n");
