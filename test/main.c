@@ -48,6 +48,15 @@ int			main()
   reset_malloc();
 
 
+  malloc(500000); // should be 3 page
+  malloc(4500); // should be 3 page
+  malloc(4500); // should be 3 page
+  malloc(4500); // should be 3 page
+  malloc(1); // should be two page
+  show_alloc_mem();
+
+  reset_malloc();
+
   void* ptr3;
   printf("yolo\n");
 
