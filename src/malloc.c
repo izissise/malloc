@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:45:34 2014 jonathan.collinet
-** Last update Mon Feb  3 22:52:47 2014 jonathan.collinet
+** Last update Wed Feb  5 16:52:30 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -71,5 +71,22 @@ void		*realloc(void *ptr, size_t size)
 
 void		free(void *ptr)
 {
-  (void)ptr;
+  t_list	*cur_node;
+  t_list	*last_node;
+  void		*bweak;
+
+  cur_node = ptr - sizeof(t_list);
+  if (cur_node->prev && cur_node->prev->is_free == 1)
+    {
+      cur_node->prev->next = cur_node->next;
+      cur_node->next->prev = cur_node->prev;
+      cur_node = cur_node->prev;
+    }
+  bweak = sbrk(0);
+  last_node = LASTNODE(bweak);
+  if (cur_node != last_node && cur_node->next->is_free == 1)
+    {
+      cur_node->next = cur_node->next->next;
+      cur_node->next->prev = cur_node;
+    }
 }

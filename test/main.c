@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Mon Feb  3 11:18:40 2014 jonathan.collinet
-** Last update Wed Feb  5 14:13:19 2014 jonathan.collinet
+** Last update Wed Feb  5 16:51:53 2014 jonathan.collinet
 */
 
 #include "../src/malloc.h"
@@ -46,25 +46,11 @@ int			main()
 
   reset_malloc();
 
+  void* ptr3;
 
-
-  malloc(50);
+  ptr3 = malloc(50);
   show_alloc_mem();
-  /*
-
-    malloc(50);
-    show_alloc_mem();
-    malloc(50);
-    show_alloc_mem();
-    malloc(5000);
-    show_alloc_mem();
-    malloc(50);
-    show_alloc_mem();
-    malloc(50);
-    show_alloc_mem();
-
-    end = sbrk(0);
-    hexdump(ptr, end - ptr);*/
-
+  free(ptr3);
+  show_alloc_mem();
   return 0;
 }
