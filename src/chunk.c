@@ -5,7 +5,7 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Mon Feb  3 18:43:16 2014 jonathan.collinet
+** Last update Thu Feb  6 14:21:06 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -28,8 +28,7 @@ void		update_last_size(t_list *new_last_node)
 {
   t_list		**lastptr;
 
- // printf("%p\n", new_last_node);
+  //printf("new_last_node : %p -- new_last_node->next : %p\n", new_last_node, new_last_node->next);
   lastptr = ((t_list**)(new_last_node->next));
   *lastptr = new_last_node;
 }
-
