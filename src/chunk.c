@@ -5,7 +5,7 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Thu Feb  6 14:21:06 2014 jonathan.collinet
+** Last update Thu Feb  6 21:13:26 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -32,7 +32,7 @@ void		update_last_size(t_list *new_last_node)
   *lastptr = new_last_node;
 }
 
-t_list	*merge_chunk(t_list *tomerge, t_list *lastnode)
+t_list		*merge_chunk(t_list *tomerge, t_list *lastnode)
 {
   tomerge->is_free = 1;
   if (tomerge->prev && tomerge->prev->is_free == 1)

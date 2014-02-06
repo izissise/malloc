@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:45:34 2014 jonathan.collinet
-** Last update Thu Feb  6 13:42:33 2014 jonathan.collinet
+** Last update Thu Feb  6 21:15:16 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -75,7 +75,17 @@ void		*realloc(void *ptr, size_t size)
   size = ALIGN(size, CPUP2REGSIZE);
   last_node = LASTNODE(sbrk(0));
   if (size <= NODESIZE(node)) //if lots of free space add a node ?
-    return (ptr);
+    {
+      reuse_chunk(node, size);
+      if (node->next == last_node)
+	update_last_size(node->next);
+      else
+	{
+	  init_chunk(node->next->next, node->next, (node->next->next + sizeof(t_list)) - node->next);
+	  merge_chunk(node->next, last_node);
+	}
+      return (node);
+    }
   if (node != last_node && node->next->is_free
       && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
     {
@@ -111,7 +121,6 @@ void		free(void *ptr)
   bweak = sbrk(0);
   last_node = LASTNODE(bweak);
   cur_node = merge_chunk(cur_node, last_node);
-  update_last_size(cur_node);
 }
 
 void		*calloc(size_t nmemb, size_t size)

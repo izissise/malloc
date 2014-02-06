@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Mon Feb  3 11:18:40 2014 jonathan.collinet
-** Last update Thu Feb  6 13:50:09 2014 jonathan.collinet
+** Last update Thu Feb  6 17:51:53 2014 jonathan.collinet
 */
 
 #include "../src/malloc.h"
@@ -60,10 +60,13 @@ int			main()
   reset_malloc();
 
   printf("\n\non fait les vrais test ici -- \n\n");
-  ptra = malloc(100);
+
+  ptra = malloc(3500);
+  show_alloc_mem();
   ptrb = malloc(100);
-  malloc(100);
-  free(ptrb);
+  //malloc(100);
+  //free(ptrb);
+  show_alloc_mem();
   ptra = realloc(ptra, 150);
   show_alloc_mem();
 
