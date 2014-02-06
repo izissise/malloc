@@ -31,3 +31,20 @@ void		update_last_size(t_list *new_last_node)
   lastptr = ((t_list**)(new_last_node->next));
   *lastptr = new_last_node;
 }
+
+t_list	*merge_chunk(t_list *tomerge, t_list *lastnode)
+{
+  tomerge->is_free = 1;
+  if (tomerge->prev && tomerge->prev->is_free == 1)
+    {
+      tomerge->prev->next = tomerge->next;
+      tomerge->next->prev = tomerge->prev;
+      tomerge = tomerge->prev;
+    }
+  if (tomerge != lastnode && tomerge->next->is_free == 1)
+    {
+      tomerge->next = tomerge->next->next;
+      tomerge->next->prev = tomerge;
+    }
+  return (tomerge);
+}

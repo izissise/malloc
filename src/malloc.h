@@ -70,6 +70,7 @@ t_list		*find_free_size_node(t_list *last_node, size_t req_size);
 
 int			reuse_chunk(t_list *chunk, size_t asked_size);
 void			update_last_size(t_list *prev_last_node);
+t_list			*merge_chunk(t_list *tomerge, t_list *lastnode);
 
 /*
 ** show_alloc_mem.c

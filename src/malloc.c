@@ -110,19 +110,8 @@ void		free(void *ptr)
     return ;
   bweak = sbrk(0);
   last_node = LASTNODE(bweak);
-  cur_node->is_free = 1;
-  if (cur_node->prev && cur_node->prev->is_free == 1)
-    {
-      cur_node->prev->next = cur_node->next;
-      cur_node->next->prev = cur_node->prev;
-      cur_node = cur_node->prev;
-    }
-  if (cur_node != last_node && cur_node->next->is_free == 1)
-    {
-      cur_node->next = cur_node->next->next;
-      cur_node->next->prev = cur_node;
-    }
-  //update_last_size(cur_node);
+  cur_node = merge_chunk(cur_node, last_node);
+  update_last_size(cur_node);
 }
 
 void		*calloc(size_t nmemb, size_t size)
