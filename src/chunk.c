@@ -22,13 +22,11 @@ void		reuse_chunk(t_list *chunk, size_t asked_size)
     }
 }
 
-void		update_last_size(t_list *prev_last_node)
+void		update_last_size(t_list *new_last_node)
 {
-  t_list		*tmp;
   t_list		**lastptr;
 
-  tmp = prev_last_node->next;
-  lastptr = ((t_list**)(tmp->next));
-  *lastptr = tmp;
+  lastptr = ((t_list**)(new_last_node->next));
+  *lastptr = new_last_node;
 }
 

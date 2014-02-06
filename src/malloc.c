@@ -49,7 +49,7 @@ void		*malloc(size_t size)
         {
           reuse_chunk(result_node, size);
           if (result_node == last_node)
-            update_last_size(last_node);
+            update_last_size(last_node->next);
         }
     }
   result_node->is_free = 0;
