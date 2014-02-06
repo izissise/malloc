@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:45:34 2014 jonathan.collinet
-** Last update Thu Feb  6 11:27:19 2014 jonathan.collinet
+** Last update Thu Feb  6 13:42:33 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -61,6 +61,7 @@ void		*realloc(void *ptr, size_t size)
 {
   void		*nptr;
   t_list	*node;
+  t_list	*last_node;
   size_t	tmpsize;
 
   if (!ptr)
@@ -73,11 +74,14 @@ void		*realloc(void *ptr, size_t size)
       return (NULL);
     }
   size = ALIGN(size, CPUP2REGSIZE);
+  last_node = LASTNODE(sbrk(0));
   if (size <= NODESIZE(node)) //if lots of free space add a node ?
     return (ptr);
-  if (node != LASTNODE(sbrk(0)) && node->next->is_free
+  if (node != last_node && node->next->is_free
       && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
     {
+      if (node->next == last_node)
+	update_last_size(node->next);
       if (tmpsize - sizeof(t_list) - ALIGN(1, CPUP2REGSIZE) >= size)
         {
           node->next = ((void*)node + size + sizeof(t_list));
