@@ -39,14 +39,19 @@ t_list		*merge_chunk(t_list *tomerge, t_list *lastnode)
     {
       tomerge->prev->next = tomerge->next;
       tomerge->next->prev = tomerge->prev;
+      if (tomerge->next == lastnode->next)
+        {
+          update_last_size(tomerge->prev);
+          lastnode = tomerge->prev;
+        }
       tomerge = tomerge->prev;
     }
   if (tomerge != lastnode && tomerge->next->is_free == 1)
     {
       tomerge->next = tomerge->next->next;
       tomerge->next->prev = tomerge;
+      if (tomerge->next == lastnode->next)
+        update_last_size(tomerge);
     }
-  if (tomerge->next == lastnode->next)
-    update_last_size(tomerge);
   return (tomerge);
 }

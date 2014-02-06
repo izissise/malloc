@@ -78,13 +78,13 @@ void		*realloc(void *ptr, size_t size)
     {
       reuse_chunk(node, size);
       if (node->next == last_node)
-	update_last_size(node->next);
+        update_last_size(node->next);
       else
-	{
-	  init_chunk(node->next->next, node->next, (node->next->next + sizeof(t_list)) - node->next);
-	  merge_chunk(node->next, last_node);
-	}
-      return (node);
+        {
+          init_chunk(node->next->next, node->next, (node->next->next + sizeof(t_list)) - node->next);
+          merge_chunk(node->next, last_node);
+        }
+      return (ptr);
     }
   if (node != last_node && node->next->is_free
       && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
@@ -113,14 +113,12 @@ void		*realloc(void *ptr, size_t size)
 void		free(void *ptr)
 {
   t_list	*cur_node;
-  t_list	*last_node;
   void		*bweak;
 
   if (!ptr || !first_addr || (cur_node = CHECKVALIDNODE(ptr)) == NULL)
     return ;
   bweak = sbrk(0);
-  last_node = LASTNODE(bweak);
-  cur_node = merge_chunk(cur_node, last_node);
+  cur_node = merge_chunk(cur_node,  LASTNODE(bweak));
 }
 
 void		*calloc(size_t nmemb, size_t size)
