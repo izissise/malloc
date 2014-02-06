@@ -28,7 +28,6 @@ void		update_last_size(t_list *new_last_node)
 {
   t_list		**lastptr;
 
-  //printf("new_last_node : %p -- new_last_node->next : %p\n", new_last_node, new_last_node->next);
   lastptr = ((t_list**)(new_last_node->next));
   *lastptr = new_last_node;
 }

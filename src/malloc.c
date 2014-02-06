@@ -48,8 +48,11 @@ void		*malloc(size_t size)
       else if (reuse_chunk(result_node, size) && (result_node == last_node))
         update_last_size(last_node->next);
     }
-  result_node->is_free = 0;
-  result_node->size = real_size;
+  if (result_node)
+    {
+      result_node->is_free = 0;
+      result_node->size = real_size;
+    }
   return ((void*)result_node + sizeof(t_list));
 }
 
@@ -77,7 +80,7 @@ void		*realloc(void *ptr, size_t size)
       && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
     {
       if (node->next == last_node)
-	update_last_size(node->next);
+        update_last_size(node->next);
       if (tmpsize - sizeof(t_list) - ALIGN(1, CPUP2REGSIZE) >= size)
         {
           node->next = ((void*)node + size + sizeof(t_list));
@@ -99,33 +102,39 @@ void		*realloc(void *ptr, size_t size)
 
 void		free(void *ptr)
 {
-   t_list	*cur_node;
-   t_list	*last_node;
-   void		*bweak;
+  t_list	*cur_node;
+  t_list	*last_node;
+  void		*bweak;
 
-   if (!ptr || (cur_node = CHECKVALIDNODE(ptr)) == NULL)
-     return ;
-   bweak = sbrk(0);
-   last_node = LASTNODE(bweak);
-   cur_node->is_free = 1;
-   if (cur_node->prev && cur_node->prev->is_free == 1)
-     {
-       cur_node->prev->next = cur_node->next;
-       cur_node->next->prev = cur_node->prev;
-       cur_node = cur_node->prev;
-     }
-   if (cur_node != last_node && cur_node->next->is_free == 1)
-     {
-       cur_node->next = cur_node->next->next;
-       cur_node->next->prev = cur_node;
-     }
-   update_last_size(cur_node);
+  if (!ptr || !first_addr || (cur_node = CHECKVALIDNODE(ptr)) == NULL)
+    return ;
+  bweak = sbrk(0);
+  last_node = LASTNODE(bweak);
+  cur_node->is_free = 1;
+  if (cur_node->prev && cur_node->prev->is_free == 1)
+    {
+      cur_node->prev->next = cur_node->next;
+      cur_node->next->prev = cur_node->prev;
+      cur_node = cur_node->prev;
+    }
+  if (cur_node != last_node && cur_node->next->is_free == 1)
+    {
+      cur_node->next = cur_node->next->next;
+      cur_node->next->prev = cur_node;
+    }
+  //update_last_size(cur_node);
 }
 
 void		*calloc(size_t nmemb, size_t size)
 {
   void		*ptr;
+  size_t		testsize;
 
+  if (size == 0 || nmemb == 0)
+    return (NULL);
+  testsize = nmemb * size;
+  if (testsize / size != nmemb)
+    return (NULL);
   if ((ptr = malloc(nmemb * size)) != NULL)
     memset(ptr, 0, nmemb * size);
   return (ptr);
