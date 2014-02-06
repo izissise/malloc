@@ -51,36 +51,41 @@ int			main()
   void* ptrb = malloc(3600);
   void* ptrc = malloc(200);
 
-	show_alloc_mem();
+  show_alloc_mem();
   free(ptra);
   free(ptrb);
   free(ptrc);
   show_alloc_mem();
 
-/*
-  malloc(500000); // should be 3 page
-  malloc(4500); // should be 3 page
-  malloc(4500); // should be 3 page
-  malloc(4500); // should be 3 page
-  malloc(1); // should be two page
-  show_alloc_mem();
-
   reset_malloc();
 
-  void* ptr3;
-  printf("yolo\n");
-
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
-  ptr3 = malloc(50);
+  realloc(NULL, 50);
   show_alloc_mem();
-  free(ptr3);
-  show_alloc_mem();*/
+
+  /*
+    malloc(500000); // should be 3 page
+    malloc(4500); // should be 3 page
+    malloc(4500); // should be 3 page
+    malloc(4500); // should be 3 page
+    malloc(1); // should be two page
+    show_alloc_mem();
+
+    reset_malloc();
+
+    void* ptr3;
+    printf("yolo\n");
+
+    ptr3 = malloc(50);
+    ptr3 = malloc(50);
+    ptr3 = malloc(50);
+    ptr3 = malloc(50);
+    ptr3 = malloc(50);
+    ptr3 = malloc(50);
+    ptr3 = malloc(50);
+    ptr3 = malloc(50);
+    show_alloc_mem();
+    free(ptr3);
+    show_alloc_mem();*/
 
   return 0;
 

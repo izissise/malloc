@@ -59,18 +59,41 @@ void		*malloc(size_t size)
 
 void		*realloc(void *ptr, size_t size)
 {
-  void	*nptr;
-  size_t	rsize;
+  void		*nptr;
+  t_list		*node;
+  size_t		tmpsize;
 
   if (!ptr)
     return (malloc(size));
-  if (!CHECKVALIDNODE(ptr))
+  if ((node = CHECKVALIDNODE(ptr)) == NULL)
     return (NULL);
-  rsize = NODEREALSIZE((t_list*)ptr);
-
-
-
-  memcpy(nptr, ptr, NODESIZE((t_list*)(((void*)ptr) - sizeof(t_list))));
+  if (size == 0)
+    {
+      free(ptr);
+      return (NULL);
+    }
+  size = ALIGN(size, CPUP2REGSIZE);
+  if (size <= NODESIZE(node)) //if lots of free space add a node ?
+    return (ptr);
+  if (node != LASTNODE(sbrk(0)) && node->next->is_free
+      && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) <= size)
+    {
+      if (tmpsize + sizeof(t_list) + ALIGN(1, CPUP2REGSIZE) <= size)
+        {
+          node->next = ((void*)node + size + sizeof(t_list));
+          init_chunk(node->next, node, tmpsize - sizeof(t_list) - size);
+        }
+      else
+        {
+          node->next = ((void*)node + tmpsize + sizeof(t_list));
+          node->next->prev = node;
+        }
+      return (ptr);
+    }
+  if ((nptr = malloc(size)) == NULL)
+    return (NULL);
+  memcpy(nptr, ptr, NODESIZE(node));
+  free(ptr);
   return (nptr);
 }
 
@@ -80,11 +103,10 @@ void		free(void *ptr)
   t_list	*last_node;
   void		*bweak;
 
-  if (!ptr || !CHECKVALIDNODE(ptr))
+  if (!ptr || (cur_node = CHECKVALIDNODE(ptr)) == NULL)
     return ;
   bweak = sbrk(0);
   last_node = LASTNODE(bweak);
-  cur_node = ptr - sizeof(t_list);
   cur_node->is_free = 1;
   if (cur_node->prev && cur_node->prev->is_free == 1)
     {
@@ -107,3 +129,4 @@ void		*calloc(size_t nmemb, size_t size)
     memset(ptr, 0, nmemb * size);
   return (ptr);
 }
+
