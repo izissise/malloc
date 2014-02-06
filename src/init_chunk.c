@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 17:13:01 2014 jonathan.collinet
-** Last update Mon Feb  3 22:54:39 2014 jonathan.collinet
+** Last update Thu Feb  6 11:01:05 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -26,6 +26,7 @@ void		init_pages(t_list *first, t_list *prev_chunk, size_t size)
 
 void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size)
 {
+  printf("chunk : %p, prev_chunk : %p\n", chunk, prev_chunk);
   chunk->prev = prev_chunk;
   chunk->next = ((void*)chunk + size + sizeof(t_list));
   chunk->is_free = 1;

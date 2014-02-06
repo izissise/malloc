@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:45:34 2014 jonathan.collinet
-** Last update Wed Feb  5 21:42:49 2014 jonathan.collinet
+** Last update Thu Feb  6 11:27:19 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -60,8 +60,8 @@ void		*malloc(size_t size)
 void		*realloc(void *ptr, size_t size)
 {
   void		*nptr;
-  t_list		*node;
-  size_t		tmpsize;
+  t_list	*node;
+  size_t	tmpsize;
 
   if (!ptr)
     return (malloc(size));
@@ -76,16 +76,16 @@ void		*realloc(void *ptr, size_t size)
   if (size <= NODESIZE(node)) //if lots of free space add a node ?
     return (ptr);
   if (node != LASTNODE(sbrk(0)) && node->next->is_free
-      && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) <= size)
+      && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
     {
-      if (tmpsize + sizeof(t_list) + ALIGN(1, CPUP2REGSIZE) <= size)
+      if (tmpsize - sizeof(t_list) - ALIGN(1, CPUP2REGSIZE) >= size)
         {
           node->next = ((void*)node + size + sizeof(t_list));
           init_chunk(node->next, node, tmpsize - sizeof(t_list) - size);
         }
       else
         {
-          node->next = ((void*)node + tmpsize + sizeof(t_list));
+          node->next = node->next->next;
           node->next->prev = node;
         }
       return (ptr);

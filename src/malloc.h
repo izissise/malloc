@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:29:51 2014 jonathan.collinet
-** Last update Mon Feb  3 13:31:17 2014 jonathan.collinet
+** Last update Thu Feb  6 11:07:14 2014 jonathan.collinet
 */
 
 #ifndef MALLOC_H_
@@ -15,14 +15,14 @@
 # include <string.h>
 # include <stdio.h>
 
-# define PAGESIZE			getpagesize()
+# define PAGESIZE		getpagesize()
 # define CPUP2REGSIZE		3
 # define ALIGN(size, power)	(((((size) - 1) >> (power)) + 1) << (power))
 # define ALIGN_PS(size, ps)	(((((size) - 1) / (ps)) + 1) * (ps))
 
 # define LASTNODE(brkaddr)	((*(t_list**)(((void*)brkaddr) - sizeof(t_list*))))
 # define NODESIZE(x)		(((size_t)((x)->next)) - (((size_t)(x)) + sizeof(t_list)))
-# define NODEREALSIZE(x)		((x)->size)
+# define NODEREALSIZE(x)	((x)->size)
 # define CHECKVALIDNODE(x)	((t_list*)((void*)(x) - sizeof(t_list)))
 
 # define SETFLAG(x, y) ((x) |= (y))
