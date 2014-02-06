@@ -111,7 +111,6 @@ void		free(void *ptr)
   bweak = sbrk(0);
   last_node = LASTNODE(bweak);
   cur_node = merge_chunk(cur_node, last_node);
-  update_last_size(cur_node);
 }
 
 void		*calloc(size_t nmemb, size_t size)
