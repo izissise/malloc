@@ -26,7 +26,7 @@ void		init_pages(t_list *first, t_list *prev_chunk, size_t size)
 
 void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size)
 {
-  printf("chunk : %p, prev_chunk : %p\n", chunk, prev_chunk);
+  //printf("chunk : %p, prev_chunk : %p\n", chunk, prev_chunk);
   chunk->prev = prev_chunk;
   chunk->next = ((void*)chunk + size + sizeof(t_list));
   chunk->is_free = 1;
