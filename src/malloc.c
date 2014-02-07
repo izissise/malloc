@@ -65,7 +65,7 @@ void		*realloc(void *ptr, size_t size)
 
   if (!ptr)
     return (malloc(size));
-  if ((node = CHECKVALIDNODE(ptr)) == NULL)
+  if ((size & 0x8000000000000000) || (node = CHECKVALIDNODE(ptr)) == NULL)
     return (NULL);
   if (size == 0)
     {
