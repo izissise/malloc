@@ -53,7 +53,7 @@ void		*malloc(size_t size)
       result_node->is_free = 0;
       result_node->size = real_size;
     }
-  return ((void*)result_node + sizeof(t_list));
+  return (result_node ? ((void*)result_node + sizeof(t_list)) : NULL);
 }
 
 void		*realloc(void *ptr, size_t size)
