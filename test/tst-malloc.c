@@ -38,6 +38,7 @@ main (void)
 
   errno = 0;
 
+  p = malloc (-2);
   p = malloc (-1);
   save = errno;
 

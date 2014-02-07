@@ -26,7 +26,6 @@ void		init_pages(t_list *first, t_list *prev_chunk, size_t size)
 
 void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size)
 {
-  //printf("chunk : %p, prev_chunk : %p\n", chunk, prev_chunk);
   chunk->prev = prev_chunk;
   chunk->next = ((void*)chunk + size + sizeof(t_list));
   chunk->is_free = 1;
@@ -37,9 +36,11 @@ void		*init_first_chunk(size_t size)
 {
   t_list	*first_addr;
 
-  first_addr = sbrk(ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(t_list*), PAGESIZE));
+  first_addr = sbrk(ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(t_list*),
+                             PAGESIZE));
   if (first_addr == ((void*)(-1)))
     return (NULL);
+  gset_break(sbrk(0));
   init_pages(first_addr, NULL, size);
   return (first_addr);
 }
@@ -49,7 +50,11 @@ void		*add_page(size_t size)
   void		*page_start;
   t_list	*prev_last_node;
 
-  page_start = sbrk(ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(t_list*), PAGESIZE));
+  page_start = sbrk(ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(t_list*),
+                             PAGESIZE));
+  if (page_start == ((void*)(-1)))
+    return (NULL);
+  gset_break(sbrk(0));
   prev_last_node = LASTNODE(page_start);
   prev_last_node->next = ((void*)prev_last_node->next) + sizeof(t_list*);
   init_pages(page_start, prev_last_node, size);

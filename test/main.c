@@ -14,8 +14,8 @@ void hexdump(void *mem, unsigned int len);
 
 void reset_malloc()
 {
-  void **first_addr = get_first_addr();
-  *first_addr = NULL;
+  //void **first_addr = get_first_addr();
+  //*first_addr = NULL;
 }
 
 int			main()
