@@ -44,11 +44,20 @@ typedef struct		s_list
 **	malloc.c
 */
 
-void			*gset_break(void *bweak);
 void			*malloc(size_t size);
 void			*realloc(void *ptr, size_t size);
 void			free(void *ptr);
 void			*calloc(size_t nmemb, size_t size);
+
+/*
+**	real_malloc.c
+*/
+
+void			*gset_break(void *bweak);
+void			*real_malloc(size_t real_size);
+void			*real_realloc(void *ptr, size_t size);
+void			real_free(void *ptr);
+void			*real_calloc(size_t nmemb, size_t size);
 
 /*
 **	init_chunk.c
@@ -60,21 +69,22 @@ void			*init_first_chunk(size_t size);
 void			*add_page(size_t size);
 
 /*
-** search_node.c
+**	search_node.c
 */
 
 t_list		*find_free_size_node(t_list *last_node, size_t req_size);
 
 /*
-** chunk.c
+**	chunk.c
 */
 
 int			reuse_chunk(t_list *chunk, size_t asked_size);
 void			update_last_size(t_list *prev_last_node);
 t_list			*merge_chunk(t_list *tomerge, t_list *lastnode);
+void			set_chunk_attr(t_list *chunk, unsigned long free, size_t size);
 
 /*
-** show_alloc_mem.c
+**	show_alloc_mem.c
 */
 
 void		show_alloc_mem();

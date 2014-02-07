@@ -10,15 +10,6 @@
 
 #include "malloc.h"
 
-void		*gset_break(void *bweak)
-{
-  static void*	last_break = NULL;
-
-  if (bweak)
-    last_break = bweak;
-  return (last_break);
-}
-
 /*
 ** malloc function
 ** in case it's the first address, we allocate a new page,
@@ -27,108 +18,35 @@ void		*gset_break(void *bweak)
 
 void		*malloc(size_t real_size)
 {
-  void*		bweak;
-  t_list*	last_node;
-  t_list*	result_node;
-  size_t	size;
+  void	*ptr;
 
-  if (real_size & 0x8000000000000000)
-    {
-      errno = ENOMEM;
-      return (NULL);
-    }
-  real_size = (real_size == 0) ? 1 : real_size;
-  size = ALIGN(real_size, CPUP2REGSIZE);
-  bweak = gset_break(NULL);
-  if (!bweak)
-    result_node = init_first_chunk(size);
-  else
-    {
-      last_node = LASTNODE(bweak);
-      if ((result_node = find_free_size_node(last_node, size)) == NULL)
-        result_node = add_page(size);
-      else if (reuse_chunk(result_node, size) && (result_node == last_node))
-        update_last_size(last_node->next);
-    }
-  if (result_node)
-    {
-      result_node->is_free = 0;
-      result_node->size = real_size;
-    }
-  else
+  ptr = real_malloc(real_size);
+  if (ptr == NULL)
     errno = ENOMEM;
-  //return (result_node ? ((void*)result_node + sizeof(t_list)) : NULL);
-  return (((void*)result_node + sizeof(t_list)));
+  return (ptr);
 }
 
 void		*realloc(void *ptr, size_t size)
 {
-  void		*nptr;
-  t_list	*node;
-  t_list	*last_node;
-  size_t	tmpsize;
+  void	*nptr;
 
-  if (!ptr)
-    return (malloc(size));
-  if ((size & 0x8000000000000000) || (node = CHECKVALIDNODE(ptr)) == NULL)
-    return (NULL);
-  if (size == 0)
-    {
-      free(ptr);
-      return (NULL);
-    }
-  size = ALIGN(size, CPUP2REGSIZE);
-  last_node = LASTNODE(sbrk(0));
-  if (size <= NODESIZE(node)) //if lots of free space add a node ?
-    {
-      reuse_chunk(node, size);
-      if (node->next == last_node)
-        update_last_size(node->next);
-      else
-        node->next->next->prev = node->next;
-      //      else
-      //merge_chunk(node->next, node->next->next);
-      return (ptr);
-    }
-  if (node != last_node && node->next->is_free
-      && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
-    {
-      if (node->next == last_node)
-        {
-          merge_chunk(node, last_node);
-          return (malloc(size));
-        }
-      return (ptr);
-    }
-  if ((nptr = malloc(size)) == NULL)
-    return (NULL);
-  memcpy(nptr, ptr, NODESIZE(node));
-  free(ptr);
+  nptr = real_realloc(ptr, size);
+  if (nptr == NULL)
+    errno = ENOMEM;
   return (nptr);
 }
 
 void		free(void *ptr)
 {
-  t_list	*cur_node;
-  void		*bweak;
-
-  if (!ptr || !gset_break(NULL) || (cur_node = CHECKVALIDNODE(ptr)) == NULL)
-    return ;
-  bweak = gset_break(NULL);
-  cur_node = merge_chunk(cur_node,  LASTNODE(bweak));
+  real_free(ptr);
 }
 
 void		*calloc(size_t nmemb, size_t size)
 {
-  void		*ptr;
-  size_t	testsize;
+  void	*ptr;
 
-  if (size == 0 || nmemb == 0)
-    return (NULL);
-  testsize = nmemb * size;
-  if (testsize / size != nmemb)
-    return (NULL);
-  if ((ptr = malloc(nmemb * size)) != NULL)
-    memset(ptr, 0, nmemb * size);
+  ptr = real_calloc(nmemb, size);
+  if (ptr == NULL)
+    errno = ENOMEM;
   return (ptr);
 }

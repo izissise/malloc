@@ -32,6 +32,15 @@ void		update_last_size(t_list *new_last_node)
   *lastptr = new_last_node;
 }
 
+void		set_chunk_attr(t_list *chunk, unsigned long free, size_t size)
+{
+  if (chunk)
+    {
+      chunk->is_free = free;
+      chunk->size = size;
+    }
+}
+
 t_list		*merge_chunk(t_list *tomerge, t_list *lastnode)
 {
   tomerge->is_free = 1;
