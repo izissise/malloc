@@ -56,7 +56,8 @@ void		*malloc(size_t real_size)
     }
   else
     errno = ENOMEM;
-  return (result_node ? ((void*)result_node + sizeof(t_list)) : NULL);
+  //return (result_node ? ((void*)result_node + sizeof(t_list)) : NULL);
+  return (((void*)result_node + sizeof(t_list)));
 }
 
 void		*realloc(void *ptr, size_t size)
