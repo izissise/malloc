@@ -33,7 +33,10 @@ void		*malloc(size_t real_size)
   size_t	size;
 
   if (real_size == 0 || (real_size & 0x8000000000000000))
-    return (NULL);
+    {
+      errno = ENOMEM;
+      return (NULL);
+    }
   size = ALIGN(real_size, CPUP2REGSIZE);
   bweak = gset_break(NULL);
   if (!bweak)
@@ -51,6 +54,8 @@ void		*malloc(size_t real_size)
       result_node->is_free = 0;
       result_node->size = real_size;
     }
+  else
+    errno = ENOMEM;
   return (result_node ? ((void*)result_node + sizeof(t_list)) : NULL);
 }
 
