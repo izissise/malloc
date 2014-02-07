@@ -30,7 +30,7 @@ void		*malloc(size_t size)
   t_list*	result_node;
   size_t	real_size;
 
-  if (size == 0)
+  if (size == 0 || (size & 0x8000000000000000))
     return (NULL);
   real_size = size;
   size = ALIGN(size, CPUP2REGSIZE);
