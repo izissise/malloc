@@ -1,0 +1,8 @@
+script mem color in 3d
+realloc merge and size down
+actual free of freed page sbrk(-x)
+thread
+test libc stuff
+sed crashing ?
+real algo ?
+
