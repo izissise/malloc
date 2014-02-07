@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:45:34 2014 jonathan.collinet
-** Last update Thu Feb  6 21:15:16 2014 jonathan.collinet
+** Last update Fri Feb  7 17:51:38 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -83,27 +83,19 @@ void		*realloc(void *ptr, size_t size)
       if (node->next == last_node)
         update_last_size(node->next);
       else
-        {
-          init_chunk(node->next->next, node->next, (node->next->next + sizeof(t_list)) - node->next);
-          merge_chunk(node->next, last_node);
-        }
+	node->next->next->prev = node->next;
+      //      else
+      //merge_chunk(node->next, node->next->next);
       return (ptr);
     }
   if (node != last_node && node->next->is_free
       && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
     {
       if (node->next == last_node)
-        update_last_size(node->next);
-      if (tmpsize - sizeof(t_list) - ALIGN(1, CPUP2REGSIZE) >= size)
-        {
-          node->next = ((void*)node + size + sizeof(t_list));
-          init_chunk(node->next, node, tmpsize - sizeof(t_list) - size);
-        }
-      else
-        {
-          node->next = node->next->next;
-          node->next->prev = node;
-        }
+	{
+	  merge_chunk(node, last_node);
+	  return (malloc(size));
+	}
       return (ptr);
     }
   if ((nptr = malloc(size)) == NULL)
@@ -127,7 +119,7 @@ void		free(void *ptr)
 void		*calloc(size_t nmemb, size_t size)
 {
   void		*ptr;
-  size_t		testsize;
+  size_t	testsize;
 
   if (size == 0 || nmemb == 0)
     return (NULL);
@@ -138,4 +130,3 @@ void		*calloc(size_t nmemb, size_t size)
     memset(ptr, 0, nmemb * size);
   return (ptr);
 }
-
