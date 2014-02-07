@@ -43,7 +43,7 @@ typedef struct		s_list
 **	malloc.c
 */
 
-void			**get_first_addr();
+void			*gset_break(void *bweak);
 void			*malloc(size_t size);
 void			*realloc(void *ptr, size_t size);
 void			free(void *ptr);

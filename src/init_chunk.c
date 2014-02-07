@@ -39,6 +39,7 @@ void		*init_first_chunk(size_t size)
   first_addr = sbrk(ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(t_list*), PAGESIZE));
   if (first_addr == ((void*)(-1)))
     return (NULL);
+  gset_break(sbrk(0));
   init_pages(first_addr, NULL, size);
   return (first_addr);
 }
@@ -51,6 +52,7 @@ void		*add_page(size_t size)
   page_start = sbrk(ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(t_list*), PAGESIZE));
   if (page_start == ((void*)(-1)))
     return (NULL);
+  gset_break(sbrk(0));
   prev_last_node = LASTNODE(page_start);
   prev_last_node->next = ((void*)prev_last_node->next) + sizeof(t_list*);
   init_pages(page_start, prev_last_node, size);

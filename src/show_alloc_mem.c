@@ -17,9 +17,9 @@ void		show_alloc_mem()
   int		i;
 
   i = 1;
-  bweak = sbrk(0);
+  bweak = gset_break(NULL);
   printf("break : %p\n", bweak);
-  if (get_first_addr())
+  if (bweak)
     {
       node = LASTNODE(bweak);
       while (node->prev)

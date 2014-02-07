@@ -10,22 +10,24 @@
 
 #include "malloc.h"
 
+void		*gset_break(void *bweak)
+{
+  static void*	last_break = NULL;
+
+  if (bweak)
+    last_break = bweak;
+  return (last_break);
+}
+
 /*
 ** malloc function
 ** in case it's the first address, we allocate a new page,
 ** else we try to use an already existing one
 */
 
-static void*	first_addr = NULL;
-
-void		**get_first_addr()
-{
-  return (&first_addr);
-}
-
 void		*malloc(size_t size)
 {
-  void*		last_addr;
+  void*		bweak;
   t_list*	last_node;
   t_list*	result_node;
   size_t	real_size;
@@ -34,15 +36,12 @@ void		*malloc(size_t size)
     return (NULL);
   real_size = size;
   size = ALIGN(size, CPUP2REGSIZE);
-  if (!first_addr)
-    {
-      first_addr = init_first_chunk(size);
-      result_node = first_addr;
-    }
+  bweak = gset_break(NULL);
+  if (!bweak)
+    result_node = init_first_chunk(size);
   else
     {
-      last_addr = sbrk(0);
-      last_node = LASTNODE(last_addr);
+      last_node = LASTNODE(bweak);
       if ((result_node = find_free_size_node(last_node, size)) == NULL)
         result_node = add_page(size);
       else if (reuse_chunk(result_node, size) && (result_node == last_node))
@@ -115,9 +114,9 @@ void		free(void *ptr)
   t_list	*cur_node;
   void		*bweak;
 
-  if (!ptr || !first_addr || (cur_node = CHECKVALIDNODE(ptr)) == NULL)
+  if (!ptr || !gset_break(NULL) || (cur_node = CHECKVALIDNODE(ptr)) == NULL)
     return ;
-  bweak = sbrk(0);
+  bweak = gset_break(NULL);
   cur_node = merge_chunk(cur_node,  LASTNODE(bweak));
 }
 
