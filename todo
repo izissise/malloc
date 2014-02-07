@@ -1,5 +1,6 @@
 script mem color in 3d
 realloc merge and size down
+verify pointer sended to free
 actual free of freed page sbrk(-x)
 thread
 test libc stuff

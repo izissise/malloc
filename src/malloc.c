@@ -32,11 +32,12 @@ void		*malloc(size_t real_size)
   t_list*	result_node;
   size_t	size;
 
-  if (real_size == 0 || (real_size & 0x8000000000000000))
+  if (real_size & 0x8000000000000000)
     {
       errno = ENOMEM;
       return (NULL);
     }
+  real_size = (real_size == 0) ? 1 : real_size;
   size = ALIGN(real_size, CPUP2REGSIZE);
   bweak = gset_break(NULL);
   if (!bweak)
@@ -84,7 +85,7 @@ void		*realloc(void *ptr, size_t size)
       if (node->next == last_node)
         update_last_size(node->next);
       else
-	node->next->next->prev = node->next;
+        node->next->next->prev = node->next;
       //      else
       //merge_chunk(node->next, node->next->next);
       return (ptr);
@@ -93,10 +94,10 @@ void		*realloc(void *ptr, size_t size)
       && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
     {
       if (node->next == last_node)
-	{
-	  merge_chunk(node, last_node);
-	  return (malloc(size));
-	}
+        {
+          merge_chunk(node, last_node);
+          return (malloc(size));
+        }
       return (ptr);
     }
   if ((nptr = malloc(size)) == NULL)
