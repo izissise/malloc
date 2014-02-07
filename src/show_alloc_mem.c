@@ -18,20 +18,20 @@ void		show_alloc_mem()
 
   i = 1;
   bweak = gset_break(NULL);
-  printf("break : %p\n", bweak);
+  printf("break : %p\n", sbrk(0));
   if (bweak)
     {
       node = LASTNODE(bweak);
-      while (node->prev)
-        {
-          node = node->prev;
-          ++i;
-        }
-      while(i)
+      while ((node = node->prev) && (node->prev))
+        ++i;
+      while (i)
         {
           if (!node->is_free && 0)
-            printf("0x%lX - 0x%lX : %lu bytes\n", (size_t)(((void*)node) + sizeof(t_list)), (size_t)((((void*)node) + node->size) + sizeof(t_list)), NODEREALSIZE(node));
-           else //real size
+            printf("0x%lX - 0x%lX : %lu bytes\n",
+                   (size_t)(((void*)node) + sizeof(t_list)),
+                   (size_t)((((void*)node) + node->size) + sizeof(t_list)),
+                   NODEREALSIZE(node));
+          else
             printf("0x%lX - 0x%lX : %lu bytes free: %ld\n", (size_t)(((void*)node) + sizeof(t_list)), (size_t)((((void*)node) + NODESIZE(node)) + sizeof(t_list)), NODESIZE(node), node->is_free);
           node = node->next;
           --i;
