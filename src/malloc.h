@@ -14,6 +14,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdio.h>
+# include <errno.h>
 
 # define PAGESIZE		getpagesize()
 # define CPUP2REGSIZE		3

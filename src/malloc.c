@@ -25,17 +25,16 @@ void		*gset_break(void *bweak)
 ** else we try to use an already existing one
 */
 
-void		*malloc(size_t size)
+void		*malloc(size_t real_size)
 {
   void*		bweak;
   t_list*	last_node;
   t_list*	result_node;
-  size_t	real_size;
+  size_t	size;
 
-  if (size == 0 || (size & 0x8000000000000000))
+  if (real_size == 0 || (real_size & 0x8000000000000000))
     return (NULL);
-  real_size = size;
-  size = ALIGN(size, CPUP2REGSIZE);
+  size = ALIGN(real_size, CPUP2REGSIZE);
   bweak = gset_break(NULL);
   if (!bweak)
     result_node = init_first_chunk(size);
