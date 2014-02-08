@@ -76,12 +76,24 @@ void		real_free(void *ptr)
 {
   t_list	*cur_node;
   void		*bweak;
+  void		*last_node;
+  int		nbp;
 
   if (!ptr || !gset_break(NULL) || (cur_node = CHECKVALIDNODE(ptr)) == NULL)
     return ;
   bweak = gset_break(NULL);
   cur_node = merge_chunk(cur_node,  LASTNODE(bweak), 0);
+  last_node = LASTNODE(bweak);
   cur_node->is_alloc = 0;
+  if (last_node == cur_node &&
+      (NODESIZE(cur_node) > (size_t)ALIGN_PS(1, PAGESIZE)))
+    {
+      nbp = (NODESIZE(cur_node) / ALIGN_PS(1, PAGESIZE));
+      cur_node->next = (void*)cur_node + sizeof(t_list) +
+                       (NODESIZE(cur_node) - (nbp * PAGESIZE));
+      my_sbrk(-(nbp * PAGESIZE));
+      update_last_size(cur_node);
+    }
 }
 
 void		*real_calloc(size_t nmemb, size_t size)

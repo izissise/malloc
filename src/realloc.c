@@ -35,8 +35,7 @@ int		realloc_special_case(t_list *node, size_t size)
     {
       merge_chunk(node, last_node, 1);
       last_node = LASTNODE(gset_break(NULL));
-      reuse_chunk(node, size);
-      if (node == last_node)
+      if (reuse_chunk(node, size) && (node == last_node))
         update_last_size(node->next);
       return (1);
     }

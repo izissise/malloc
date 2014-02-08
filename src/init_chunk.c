@@ -10,7 +10,7 @@
 
 #include "malloc.h"
 
-void		*my_sbrk(size_t size)
+void		*my_sbrk(intptr_t size)
 {
   int	ret;
   void	*lastbweak;
