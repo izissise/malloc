@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Mon Feb  3 11:18:40 2014 jonathan.collinet
-** Last update Fri Feb  7 17:59:03 2014 jonathan.collinet
+** Last update Sat Feb  8 18:45:19 2014 jonathan.collinet
 */
 
 #include "../src/malloc.h"
@@ -25,19 +25,18 @@ void hexdump(void *mem, unsigned int len);
 
 void reset_malloc()
 {
-  //void **first_addr = get_first_addr();
-  //*first_addr = NULL;
+  //  void **first_addr = get_first_addr();
+  //  *first_addr = NULL;
 }
 
 int			main()
 {
-  void *end;
-  void* ptr = sbrk(0);
+  void *ptr[11];
 
   show_alloc_mem();
 
 
-malloc(3);
+  malloc(3);
   //malloc(4096 - 64 - 8); // should be one page
   show_alloc_mem();
 
@@ -47,50 +46,42 @@ malloc(3);
   show_alloc_mem();
 
   reset_malloc();
-
-  malloc(4096 - 64 - 8); // should be two page
-  malloc(1); // should be two page
-  show_alloc_mem();
-
-  reset_malloc();
-
-  void* kqj = malloc(4096 * 2 - 64 - 8); // should be 3 page
-  free(kqj);
-  malloc(4096 * 2 - 64 - 8); // should be 3 page
-  malloc(1); // should be two page
-  show_alloc_mem();
-
-  reset_malloc();
-
-  void* ptra = malloc(5000);
-  void* ptrb = malloc(3600);
-  void* ptrc = malloc(200);
-
-  show_alloc_mem();
-  free(ptra);
-  free(ptrb);
-  free(ptrc);
-  show_alloc_mem();
-
-  reset_malloc();
-
   printf("\n\non fait les vrais test ici -- \n\n");
 
-  ptra = malloc(500);
-  ptrb = malloc(200);
-  ptrc = malloc(300);
+  // TEST REALLOC
+
+  ptr[0] = malloc(5000);
+  ptr[1] = malloc(200);
+  ptr[2] = malloc(100);
+  ptr[3] = malloc(300);
+  ptr[4] = malloc(150);
+  ptr[5] = malloc(450);
+  ptr[6] = malloc(100);
+  ptr[7] = malloc(300);
+  free(ptr[0]);
+  free(ptr[2]);
+  free(ptr[4]);
+  free(ptr[6]);
   show_alloc_mem();
-  ptra = realloc(ptra, 250);
+  ptr[1] = realloc(ptr[1], 250);
   show_alloc_mem();
-  ptra = realloc(ptrb, 650);
+  ptr[1] = realloc(ptr[1], 50);
   show_alloc_mem();
-  ptra = realloc(ptrc, 150);
+  ptr[1] = realloc(ptr[1], 25);
   show_alloc_mem();
-  ptra = realloc(ptra, 250);
+  ptr[1] = realloc(ptr[1], 24);
   show_alloc_mem();
-  ptra = realloc(ptrb, 350);
+  ptr[1] = realloc(ptr[1], 34);
   show_alloc_mem();
-  free(ptra);
+  ptr[1] = realloc(ptr[1], 32);
+  show_alloc_mem();
+  ptr[1] = realloc(ptr[1], 250);
+  show_alloc_mem();
+  ptr[3] = realloc(ptr[3], 350);
+  show_alloc_mem();
+  ptr[5] = realloc(ptr[5], 1000);
+  show_alloc_mem();
+  ptr[7] = realloc(ptr[7], 50);
   show_alloc_mem();
 
   /*
@@ -122,7 +113,7 @@ malloc(3);
 
 
 
-//  a = malloc(4024);
+  //  a = malloc(4024);
 
 
   pid_t pid = vfork();
@@ -153,12 +144,12 @@ malloc(3);
           else if (rd % 2 == 0)
             free(a);
         }
-      exit(0);
+      return 0;
     }
   int l;
   printf("done\n");
   waitpid(pid, &l, 0);
 
+  //  
   return 0;
-
 }

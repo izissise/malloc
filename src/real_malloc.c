@@ -5,7 +5,7 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Mon Oct  8 16:20:21 2012 hugues morisset
+** Last update Sat Feb  8 18:43:19 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -66,25 +66,31 @@ void		*real_realloc(void *ptr, size_t size)
   last_node = LASTNODE(sbrk(0));
   if (size <= NODESIZE(node)) //if lots of free space add a node ?
     {
-      /*    reuse_chunk(node, size);
-          if (node->next == last_node)
-            update_last_size(node->next);
-          else
-            node->next->next->prev = node->next;
-          //      else
-          //merge_chunk(node->next, node->next->next);*/
+      reuse_chunk(node, size);
+      if (node->next == last_node)
+        update_last_size(node->next);
+      else
+	node->next->next->prev = node->next;
       return (ptr);
     }
-  /* if (node != last_node && node->next->
+   if (node != last_node && !node->next->is_alloc
        && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
      {
-       if (node->next == last_node)
-         {
-           merge_chunk(node, last_node);
-           return (real_malloc(size));
-         }
-       return (ptr);
-     }*/
+      if (node->next == last_node)
+	{
+	  merge_chunk(node, last_node, 1);
+	  memcpy(((void*)node) + sizeof(t_list), ptr, NODESIZE(node));
+	  return (malloc(size));
+	}
+      else
+	{
+	  reuse_chunk(node->next, (NODESIZE(node->next) + NODESIZE(node) - size));
+	  merge_chunk(node, last_node, 1);
+	  memcpy(((void*)node) + sizeof(t_list), ptr, NODESIZE(node));
+	  node->is_alloc = 1;
+	}
+      return (ptr);
+     }
   if ((nptr = real_malloc(size)) == NULL)
     return (NULL);
   memcpy(nptr, ptr, NODESIZE(node));
@@ -100,7 +106,7 @@ void		real_free(void *ptr)
   if (!ptr || !gset_break(NULL) || (cur_node = CHECKVALIDNODE(ptr)) == NULL)
     return ;
   bweak = gset_break(NULL);
-  cur_node = merge_chunk(cur_node,  LASTNODE(bweak));
+  cur_node = merge_chunk(cur_node,  LASTNODE(bweak), 0);
   cur_node->is_alloc = 0;
 }
 

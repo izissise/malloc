@@ -5,7 +5,7 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Fri Feb  7 17:59:40 2014 jonathan.collinet
+** Last update Sat Feb  8 18:41:24 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -42,7 +42,7 @@ int		reuse_chunk(t_list *chunk, size_t asked_size)
 
 void		update_last_size(t_list *new_last_node)
 {
-  t_list		**lastptr;
+  t_list	**lastptr;
 
   lastptr = ((t_list**)(new_last_node->next));
   *lastptr = new_last_node;
@@ -58,9 +58,9 @@ void		set_chunk_attr(t_list *chunk, unsigned long alloc, size_t size)
     }
 }
 
-t_list		*merge_chunk(t_list *tomerge, t_list *lastnode)
+t_list		*merge_chunk(t_list *tomerge, t_list *lastnode, short rm)
 {
-  if (tomerge->prev && tomerge->prev->is_alloc == 0)
+  if (tomerge->prev && tomerge->prev->is_alloc == 0 && !rm)
     {
       tomerge->prev->next = tomerge->next;
       tomerge->next->prev = tomerge->prev;

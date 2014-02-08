@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:29:51 2014 jonathan.collinet
-** Last update Thu Feb  6 11:07:14 2014 jonathan.collinet
+** Last update Sat Feb  8 18:34:04 2014 jonathan.collinet
 */
 
 #ifndef MALLOC_H_
@@ -81,7 +81,7 @@ t_list	*find_free_size_node(t_list *last_node, size_t req_size);
 void		*is_valid_ptr(void *ptr);
 int		reuse_chunk(t_list *chunk, size_t asked_size);
 void		update_last_size(t_list *prev_last_node);
-t_list		*merge_chunk(t_list *tomerge, t_list *lastnode);
+t_list		*merge_chunk(t_list *tomerge, t_list *lastnode, short rm);
 void		set_chunk_attr(t_list *chunk, unsigned long alloc, size_t size);
 
 /*
