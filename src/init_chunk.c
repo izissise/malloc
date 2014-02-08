@@ -43,8 +43,7 @@ void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size)
 {
   chunk->prev = prev_chunk;
   chunk->next = ((void*)chunk + size + sizeof(t_list));
-  chunk->is_free = 1;
-  chunk->size = size;
+  chunk->is_alloc = 0;
 }
 
 void		*init_first_chunk(size_t size)

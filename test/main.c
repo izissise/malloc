@@ -34,7 +34,11 @@ int			main()
   void *end;
   void* ptr = sbrk(0);
 
-  malloc(4096 - 64 - 8); // should be one page
+  show_alloc_mem();
+
+
+malloc(3);
+  //malloc(4096 - 64 - 8); // should be one page
   show_alloc_mem();
 
   reset_malloc();

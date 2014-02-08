@@ -10,6 +10,22 @@
 
 #include "malloc.h"
 
+void		*is_valid_ptr(void *ptr)
+{
+  t_list	*list;
+
+  list = ((void*)(ptr) - sizeof(t_list));
+  t_list	*lastlist = LASTNODE(gset_break(NULL));
+  while (lastlist)
+    {
+      if (lastlist == list)
+        return (list);
+      lastlist = lastlist->prev;
+    }
+
+  return (NULL);
+}
+
 int		reuse_chunk(t_list *chunk, size_t asked_size)
 {
   size_t	size;
@@ -32,19 +48,19 @@ void		update_last_size(t_list *new_last_node)
   *lastptr = new_last_node;
 }
 
-void		set_chunk_attr(t_list *chunk, unsigned long free, size_t size)
+void		set_chunk_attr(t_list *chunk, unsigned long alloc, size_t size)
 {
   if (chunk)
     {
-      chunk->is_free = free;
-      chunk->size = size;
+      chunk->is_alloc = alloc;
+      if (alloc)
+        chunk->is_alloc = 1 + (ALIGN_PS(size, CPUP2REGSIZE) - size);
     }
 }
 
 t_list		*merge_chunk(t_list *tomerge, t_list *lastnode)
 {
-  tomerge->is_free = 1;
-  if (tomerge->prev && tomerge->prev->is_free == 1)
+  if (tomerge->prev && tomerge->prev->is_alloc == 0)
     {
       tomerge->prev->next = tomerge->next;
       tomerge->next->prev = tomerge->prev;
@@ -55,7 +71,7 @@ t_list		*merge_chunk(t_list *tomerge, t_list *lastnode)
         }
       tomerge = tomerge->prev;
     }
-  if (tomerge != lastnode && tomerge->next->is_free == 1)
+  if (tomerge != lastnode && tomerge->next->is_alloc == 0)
     {
       tomerge->next = tomerge->next->next;
       tomerge->next->prev = tomerge;

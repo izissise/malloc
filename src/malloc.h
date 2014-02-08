@@ -23,8 +23,8 @@
 
 # define LASTNODE(brkaddr) ((*(t_list**)(((void*)brkaddr) - sizeof(t_list*))))
 # define NODESIZE(x) (((size_t)((x)->next)) - (((size_t)(x)) + sizeof(t_list)))
-# define NODEREALSIZE(x)	((x)->size)
-# define CHECKVALIDNODE(x)	((t_list*)((void*)(x) - sizeof(t_list)))
+# define NODEREALSIZE(x)	(NODESIZE(x) - ((x)->is_alloc - 1))
+# define CHECKVALIDNODE(x)	(is_valid_ptr(x))
 
 # define SETFLAG(x, y) ((x) |= (y))
 # define UNSETFLAG(x, y) ((x) &= ~(y))
@@ -36,8 +36,7 @@ typedef struct		s_list
 {
   struct s_list		*prev;
   struct s_list		*next;
-  unsigned long		is_free;
-  size_t		size;
+  unsigned long		is_alloc;
 }			t_list;
 
 /*
@@ -79,10 +78,11 @@ t_list	*find_free_size_node(t_list *last_node, size_t req_size);
 **	chunk.c
 */
 
+void		*is_valid_ptr(void *ptr);
 int		reuse_chunk(t_list *chunk, size_t asked_size);
 void		update_last_size(t_list *prev_last_node);
 t_list		*merge_chunk(t_list *tomerge, t_list *lastnode);
-void		set_chunk_attr(t_list *chunk, unsigned long free, size_t size);
+void		set_chunk_attr(t_list *chunk, unsigned long alloc, size_t size);
 
 /*
 **	show_alloc_mem.c

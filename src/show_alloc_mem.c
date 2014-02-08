@@ -26,13 +26,13 @@ void		show_alloc_mem()
         ++i;
       while (i)
         {
-          if (!node->is_free && 0)
+          if (node->is_alloc)
             printf("0x%lX - 0x%lX : %lu bytes\n",
-                   (size_t)(((void*)node) + sizeof(t_list)),
-                   (size_t)((((void*)node) + node->size) + sizeof(t_list)),
+                   ((size_t)node) + sizeof(t_list),
+                   (((size_t)node) + NODEREALSIZE(node)) + sizeof(t_list),
                    NODEREALSIZE(node));
-          else
-            printf("0x%lX - 0x%lX : %lu bytes free: %ld\n", (size_t)(((void*)node) + sizeof(t_list)), (size_t)((((void*)node) + NODESIZE(node)) + sizeof(t_list)), NODESIZE(node), node->is_free);
+         // else
+         //   printf("0x%lX - 0x%lX : %lu bytes free: %ld\n", (size_t)(((void*)node) + sizeof(t_list)), (size_t)((((void*)node) + NODESIZE(node)) + sizeof(t_list)), NODESIZE(node), node->);
           node = node->next;
           --i;
         }

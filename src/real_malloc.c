@@ -42,7 +42,7 @@ void		*real_malloc(size_t real_size)
       else if (reuse_chunk(result_node, size) && (result_node == last_node))
         update_last_size(last_node->next);
     }
-  set_chunk_attr(result_node, 0, real_size);
+  set_chunk_attr(result_node, 1, real_size);
   return (result_node ? ((void*)result_node + sizeof(t_list)) : NULL);
 }
 
@@ -75,7 +75,7 @@ void		*real_realloc(void *ptr, size_t size)
           //merge_chunk(node->next, node->next->next);*/
       return (ptr);
     }
-  /* if (node != last_node && node->next->is_free
+  /* if (node != last_node && node->next->
        && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
      {
        if (node->next == last_node)
@@ -101,6 +101,7 @@ void		real_free(void *ptr)
     return ;
   bweak = gset_break(NULL);
   cur_node = merge_chunk(cur_node,  LASTNODE(bweak));
+  cur_node->is_alloc = 0;
 }
 
 void		*real_calloc(size_t nmemb, size_t size)
