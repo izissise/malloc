@@ -60,7 +60,7 @@ void		*real_realloc(void *ptr, size_t size)
     return (NULL);
   if (size == 0)
     {
-      free(ptr);
+      real_free(ptr);
       return (NULL);
     }
   size = ALIGN(size, CPUP2REGSIZE);
@@ -89,7 +89,7 @@ void		*real_realloc(void *ptr, size_t size)
   if ((nptr = real_malloc(size)) == NULL)
     return (NULL);
   memcpy(nptr, ptr, NODESIZE(node));
-  free(ptr);
+  real_free(ptr);
   return (nptr);
 }
 

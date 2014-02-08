@@ -8,7 +8,10 @@
 ** Last update Fri Feb  7 17:51:38 2014 jonathan.collinet
 */
 
+#include <pthread.h>
 #include "malloc.h"
+
+static pthread_mutex_t malloc_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 /*
 ** malloc function
@@ -20,9 +23,11 @@ void		*malloc(size_t real_size)
 {
   void	*ptr;
 
+  pthread_mutex_lock(&malloc_mutex);
   ptr = real_malloc(real_size);
   if (ptr == NULL)
     errno = ENOMEM;
+  pthread_mutex_unlock(&malloc_mutex);
   return (ptr);
 }
 
@@ -30,23 +35,29 @@ void		*realloc(void *ptr, size_t size)
 {
   void	*nptr;
 
+  pthread_mutex_lock(&malloc_mutex);
   nptr = real_realloc(ptr, size);
   if (nptr == NULL)
     errno = ENOMEM;
+  pthread_mutex_unlock(&malloc_mutex);
   return (nptr);
 }
 
 void		free(void *ptr)
 {
+  pthread_mutex_lock(&malloc_mutex);
   real_free(ptr);
+  pthread_mutex_unlock(&malloc_mutex);
 }
 
 void		*calloc(size_t nmemb, size_t size)
 {
   void	*ptr;
 
+  pthread_mutex_lock(&malloc_mutex);
   ptr = real_calloc(nmemb, size);
   if (ptr == NULL)
     errno = ENOMEM;
+  pthread_mutex_unlock(&malloc_mutex);
   return (ptr);
 }

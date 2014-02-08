@@ -27,7 +27,7 @@ SRCDIR		=	src/
 
 CFLAGS		+=	-g -Wall -Wextra -fPIC
 
-LDFLAGS		+=	-shared
+LDFLAGS		+=	-shared -pthread
 
 OBJ		=	$(patsubst %.c,${OBJDIR}%.o, $(SRC))
 
