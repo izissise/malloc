@@ -52,7 +52,8 @@ void		*init_first_chunk(size_t size)
   t_list	*first_addr;
   size_t	needed_size;
 
-  needed_size = ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(t_list*), PAGESIZE);
+  needed_size = ALIGN_PS(size + (sizeof(t_list) * 2) + sizeof(t_list*),
+                         PAGESIZE);
   first_addr = my_sbrk(needed_size);
   if (first_addr == ((void*)(-1)))
     return (NULL);

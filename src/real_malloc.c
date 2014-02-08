@@ -43,8 +43,7 @@ void		*real_malloc(size_t real_size)
         update_last_size(last_node->next);
     }
   set_chunk_attr(result_node, 0, real_size);
-  //return (result_node ? ((void*)result_node + sizeof(t_list)) : NULL);
-  return (((void*)result_node + sizeof(t_list)));
+  return (result_node ? ((void*)result_node + sizeof(t_list)) : NULL);
 }
 
 void		*real_realloc(void *ptr, size_t size)
