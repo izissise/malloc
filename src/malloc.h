@@ -23,7 +23,7 @@
 
 # define LASTNODE(brkaddr) ((*(t_list**)(((void*)brkaddr) - sizeof(t_list*))))
 # define NODESIZE(x) (((size_t)((x)->next)) - (((size_t)(x)) + sizeof(t_list)))
-# define NODEREALSIZE(x)	(NODESIZE(x) - ((x)->is_alloc - 1))
+# define NODEREALSIZE(x)	((x)->is_alloc)
 # define CHECKVALIDNODE(x)	(is_valid_ptr(x))
 
 # define SETFLAG(x, y) ((x) |= (y))

@@ -54,7 +54,7 @@ void		set_chunk_attr(t_list *chunk, unsigned long alloc, size_t size)
     {
       chunk->is_alloc = alloc;
       if (alloc)
-        chunk->is_alloc = 1 + (ALIGN_PS(size, CPUP2REGSIZE) - size);
+        chunk->is_alloc = size;
     }
 }
 
