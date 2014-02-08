@@ -70,27 +70,27 @@ void		*real_realloc(void *ptr, size_t size)
       if (node->next == last_node)
         update_last_size(node->next);
       else
-	node->next->next->prev = node->next;
+        node->next->next->prev = node->next;
       return (ptr);
     }
-   if (node != last_node && !node->next->is_alloc
-       && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
-     {
+  if (node != last_node && !node->next->is_alloc
+      && (tmpsize = NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
+    {
       if (node->next == last_node)
-	{
-	  merge_chunk(node, last_node, 1);
-	  memcpy(((void*)node) + sizeof(t_list), ptr, NODESIZE(node));
-	  return (malloc(size));
-	}
+        {
+          merge_chunk(node, last_node, 1);
+          memcpy(((void*)node) + sizeof(t_list), ptr, NODESIZE(node));
+          return (real_malloc(size));
+        }
       else
-	{
-	  reuse_chunk(node->next, (NODESIZE(node->next) + NODESIZE(node) - size));
-	  merge_chunk(node, last_node, 1);
-	  memcpy(((void*)node) + sizeof(t_list), ptr, NODESIZE(node));
-	  node->is_alloc = 1;
-	}
+        {
+          reuse_chunk(node->next, (NODESIZE(node->next) + NODESIZE(node) - size));
+          merge_chunk(node, last_node, 1);
+          memcpy(((void*)node) + sizeof(t_list), ptr, NODESIZE(node));
+          node->is_alloc = 1;
+        }
       return (ptr);
-     }
+    }
   if ((nptr = real_malloc(size)) == NULL)
     return (NULL);
   memcpy(nptr, ptr, NODESIZE(node));

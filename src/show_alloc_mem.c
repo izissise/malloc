@@ -10,6 +10,14 @@
 
 #include "malloc.h"
 
+void		print_node(t_list *node)
+{
+  printf("0x%lX - 0x%lX : %lu bytes\n",
+         ((size_t)node) + sizeof(t_list),
+         (((size_t)node) + NODEREALSIZE(node)) + sizeof(t_list),
+         NODEREALSIZE(node));
+}
+
 void		show_alloc_mem()
 {
   t_list	*node;
@@ -27,12 +35,7 @@ void		show_alloc_mem()
       while (i)
         {
           if (node->is_alloc)
-            printf("0x%lX - 0x%lX : %lu bytes\n",
-                   ((size_t)node) + sizeof(t_list),
-                   (((size_t)node) + NODEREALSIZE(node)) + sizeof(t_list),
-                   NODEREALSIZE(node));
-         // else
-         //   printf("0x%lX - 0x%lX : %lu bytes free: %ld\n", (size_t)(((void*)node) + sizeof(t_list)), (size_t)((((void*)node) + NODESIZE(node)) + sizeof(t_list)), NODESIZE(node), node->);
+            print_node(node);
           node = node->next;
           --i;
         }
