@@ -37,7 +37,7 @@ void		*realloc(void *ptr, size_t size)
 
   pthread_mutex_lock(&malloc_mutex);
   nptr = real_realloc(ptr, size);
-  if (nptr == NULL)
+  if (nptr == NULL && size != 0)
     errno = ENOMEM;
   pthread_mutex_unlock(&malloc_mutex);
   return (nptr);

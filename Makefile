@@ -13,6 +13,7 @@ SRC		=	malloc.c \
 			search_node.c \
 			chunk.c \
 			real_malloc.c \
+			realloc.c \
 			show_alloc_mem.c
 
 CC		=	gcc

@@ -59,6 +59,12 @@ void		real_free(void *ptr);
 void		*real_calloc(size_t nmemb, size_t size);
 
 /*
+**	realloc.c
+*/
+
+int		realloc_special_case(t_list *node, size_t size);
+
+/*
 **	init_chunk.c
 */
 
