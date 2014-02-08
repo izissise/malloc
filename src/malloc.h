@@ -63,6 +63,7 @@ void		*real_calloc(size_t nmemb, size_t size);
 **	init_chunk.c
 */
 
+void		*my_sbrk(size_t size);
 void		init_pages(t_list *first, t_list *prev_chunk, size_t size);
 void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size);
 void		*init_first_chunk(size_t size);

@@ -9,6 +9,17 @@
 */
 
 #include "../src/malloc.h"
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+void    *cv(size_t size)
+{
+  char  *var = malloc(size);
+  var[0] = 5; var[size - 1] = 10;
+  return var;
+}
+
 
 void hexdump(void *mem, unsigned int len);
 
@@ -102,6 +113,47 @@ int			main()
     show_alloc_mem();
     free(ptr3);
     show_alloc_mem();*/
+
+  printf("vfork test\n");
+
+
+
+//  a = malloc(4024);
+
+
+  pid_t pid = vfork();
+  char *a;
+  int   i;
+  int   rd;
+
+  if (pid)
+    { //daddy
+      for (i = 0; i < 1000; i++)
+        {
+          rd = rand() % 500 + 1;
+          a = cv(rd);
+          if (rd % 3 == 0)
+            a = realloc(a, rd * 2);
+          else if (rd % 2 == 0)
+            free(a);
+        }
+    }
+  else
+    {
+      for (i = 0; i < 1000; i++)
+        {
+          rd = rand() % 500 + 1;
+          a = cv(rd);
+          if (rd % 3 == 0)
+            a = realloc(a, rd * 2);
+          else if (rd % 2 == 0)
+            free(a);
+        }
+      exit(0);
+    }
+  int l;
+  printf("done\n");
+  waitpid(pid, &l, 0);
 
   return 0;
 
