@@ -61,7 +61,10 @@ void		*real_realloc(void *ptr, size_t size)
       return (NULL);
     }
   if (realloc_special_case(node, size))
-    return (ptr);
+    {
+      set_chunk_attr(node, 1, size);
+      return (ptr);
+    }
   if ((nptr = real_malloc(size)) == NULL)
     return (NULL);
   memcpy(nptr, ptr, NODESIZE(node));
