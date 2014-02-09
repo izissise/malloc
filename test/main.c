@@ -84,6 +84,18 @@ int			main()
   ptr[7] = realloc(ptr[7], 50);
   show_alloc_mem();
 
+
+malloc(65536);
+malloc(65536);
+malloc(65536);
+malloc(65536);
+malloc(65536);
+malloc(65536);
+malloc(65536);
+malloc(65536);
+malloc(65536);
+malloc(65536);
+show_alloc_mem();
   /*
     malloc(500000); // should be 3 page
     malloc(4500); // should be 3 page
@@ -144,12 +156,12 @@ int			main()
           else if (rd % 2 == 0)
             free(a);
         }
-      return 0;
+      exit(0);
     }
   int l;
   printf("done\n");
   waitpid(pid, &l, 0);
 
-  //  
+  //
   return 0;
 }

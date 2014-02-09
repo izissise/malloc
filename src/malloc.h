@@ -17,9 +17,9 @@
 # include <errno.h>
 
 # define PAGESIZE		getpagesize()
-# define CPUP2REGSIZE		3
-# define ALIGN(size, power)	(((((size) - 1) >> (power)) + 1) << (power))
-# define ALIGN_PS(size, ps)	(((((size) - 1) / (ps)) + 1) * (ps))
+# define CPUP2REGSIZE		8
+# define ALIGN(size, power)	(((intptr_t)(size) + ((power) - 1)) & ~(intptr_t)((power) - 1))
+# define ALIGN_PS(size, ps)	(((intptr_t)(size) + ((ps) - 1)) & ~(intptr_t)((ps) - 1))
 
 # define LASTNODE(brkaddr) ((*(t_list**)(((void*)brkaddr) - sizeof(t_list*))))
 # define NODESIZE(x) (((size_t)((x)->next)) - (((size_t)(x)) + sizeof(t_list)))
