@@ -86,9 +86,9 @@ void		real_free(void *ptr)
   last_node = LASTNODE(bweak);
   cur_node->is_alloc = 0;
   if (last_node == cur_node &&
-      (NODESIZE(cur_node) > (size_t)ALIGN_PS(1, PAGESIZE)))
+      (NODESIZE(cur_node) > (size_t)PAGESIZE))
     {
-      nbp = (NODESIZE(cur_node) / ALIGN_PS(1, PAGESIZE));
+      nbp = (NODESIZE(cur_node) /  PAGESIZE);
       cur_node->next = (void*)cur_node + sizeof(t_list) +
                        (NODESIZE(cur_node) - (nbp * PAGESIZE));
       my_sbrk(-(nbp * PAGESIZE));
