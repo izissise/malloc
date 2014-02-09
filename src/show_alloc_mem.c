@@ -30,7 +30,7 @@ void		show_alloc_mem()
   if (bweak)
     {
       node = LASTNODE(bweak);
-      while ((node = node->prev) && (node->prev))
+      while ((node->prev) && (node = node->prev))
         ++i;
       while (i)
         {

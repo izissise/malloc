@@ -12,11 +12,13 @@
 
 int		shrink_node(t_list *node, size_t size)
 {
-  /*reuse_chunk(node, size);
-  if (node == last_node)
-    update_last_size(node->next);
-  else if (node->next != lastnode)
-    node->next->next->prev = node->next;*/
+  /*if (reuse_chunk(node, size))
+    {
+      if (node == last_node)
+        update_last_size(node->next);
+      else if (node->next != lastnode)
+        node->next->next->prev = node->next;
+    }*/
   return (1);
 }
 

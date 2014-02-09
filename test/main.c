@@ -35,7 +35,6 @@ int			main()
 
   show_alloc_mem();
 
-
   malloc(3);
   //malloc(4096 - 64 - 8); // should be one page
   show_alloc_mem();
@@ -135,7 +134,7 @@ show_alloc_mem();
 
   if (pid)
     { //daddy
-      for (i = 0; i < 1000; i++)
+      for (i = 0; i < 10000000; i++)
         {
           rd = rand() % 500 + 1;
           a = cv(rd);
@@ -147,7 +146,7 @@ show_alloc_mem();
     }
   else
     {
-      for (i = 0; i < 1000; i++)
+      for (i = 0; i < 10000000; i++)
         {
           rd = rand() % 500 + 1;
           a = cv(rd);

@@ -29,14 +29,12 @@ void		init_pages(t_list *first, t_list *prev_chunk, size_t size)
 {
   size_t		total_ps;
   size_t		f_space_size;
-  t_list		**last_list;
 
   total_ps = ALIGN_PS((size + sizeof(t_list*) + sizeof(t_list) * 2), PAGESIZE);
-  last_list = (t_list**)((void*)first + (total_ps - sizeof(t_list*)));
-  f_space_size = total_ps - (sizeof(t_list*) + (sizeof(t_list) * 2) + size);
+  f_space_size = (total_ps - (sizeof(t_list*) + (sizeof(t_list) * 2) + size));
   init_chunk(first, prev_chunk, size);
   init_chunk(first->next, first, f_space_size);
-  *last_list = first->next;
+  update_last_size(first->next);
 }
 
 void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size)
