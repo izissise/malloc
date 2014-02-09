@@ -18,8 +18,8 @@
 
 # define PAGESIZE		getpagesize()
 # define CPUP2REGSIZE		8
-# define ALIGN(size, power)	(((intptr_t)(size) + ((power) - 1)) & ~(intptr_t)((power) - 1))
-# define ALIGN_PS(size, ps)	(((intptr_t)(size) + ((ps) - 1)) & ~(intptr_t)((ps) - 1))
+# define ALIGN(size, power)	(((size_t)(size) + ((power) - 1)) & ~(size_t)((power) - 1))
+# define ALIGN_PS(size, ps)	(((size_t)(size) + ((ps) - 1)) & ~(size_t)((ps) - 1))
 
 # define LASTNODE(brkaddr) ((*(t_list**)(((void*)brkaddr) - sizeof(t_list*))))
 # define NODESIZE(x) (((size_t)((x)->next)) - (((size_t)(x)) + sizeof(t_list)))
