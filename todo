@@ -1,7 +1,7 @@
 script mem color in 3d
-realloc merge and size down
+realloc last node brk
 verify pointer sended to free
-actual free of freed page sbrk(-x)
 weird bug
 test libc stuff
 real algo ?
+config file ?
