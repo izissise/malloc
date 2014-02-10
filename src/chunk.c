@@ -14,6 +14,8 @@ void		*is_valid_ptr(void *ptr)
 {
   t_list	*list;
 
+  if ((size_t)ptr % CPUP2REGSIZE != 0)
+    return (NULL);
   list = ((void*)(ptr) - sizeof(t_list));
   t_list	*lastlist = LASTNODE(gset_break(NULL));
   while (lastlist)
@@ -22,7 +24,6 @@ void		*is_valid_ptr(void *ptr)
         return (list);
       lastlist = lastlist->prev;
     }
-
   return (NULL);
 }
 

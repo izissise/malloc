@@ -31,7 +31,6 @@ void		*real_malloc(size_t real_size)
   real_size = (real_size == 0) ? 1 : real_size;
   size = ALIGN(real_size, CPUP2REGSIZE);
   bweak = gset_break(NULL);
-
   if (!bweak)
     result_node = init_first_chunk(size);
   else
