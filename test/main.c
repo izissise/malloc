@@ -12,6 +12,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 void    *cv(size_t size)
 {
@@ -82,19 +85,33 @@ int			main()
   show_alloc_mem();
   ptr[7] = realloc(ptr[7], 50);
   show_alloc_mem();
+  char *k;
+  int j = 0;
+  int rnd = open("/dev/urandom", O_RDONLY);
 
 
-malloc(65536);
-malloc(65536);
-malloc(65536);
-malloc(65536);
-malloc(65536);
-malloc(65536);
-malloc(65536);
-malloc(65536);
-malloc(65536);
-malloc(65536);
-show_alloc_mem();
+  //while (1)
+    {
+      k = malloc(4096);
+      read(rnd,  k, 4096);
+      printf("%d\n", j);
+      k[0] = j;
+      j++;
+    }
+  close(rnd);
+
+
+  malloc(65536);
+  malloc(65536);
+  malloc(65536);
+  malloc(65536);
+  malloc(65536);
+  malloc(65536);
+  malloc(65536);
+  malloc(65536);
+  malloc(65536);
+  malloc(65536);
+  show_alloc_mem();
   /*
     malloc(500000); // should be 3 page
     malloc(4500); // should be 3 page
@@ -134,24 +151,24 @@ show_alloc_mem();
 
   if (pid)
     { //daddy
-      for (i = 0; i < 10000000; i++)
+      for (i = 0; i < 1000; i++)
         {
           rd = rand() % 500 + 1;
           a = cv(rd);
           if (rd % 3 == 0)
-            a = realloc(a, rd * 2);
+            a = realloc(a, rand() % 500);
           else if (rd % 2 == 0)
             free(a);
         }
     }
   else
     {
-      for (i = 0; i < 10000000; i++)
+      for (i = 0; i < 1000; i++)
         {
           rd = rand() % 500 + 1;
           a = cv(rd);
           if (rd % 3 == 0)
-            a = realloc(a, rd * 2);
+            a = realloc(a, rand() % 500);
           else if (rd % 2 == 0)
             free(a);
         }

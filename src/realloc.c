@@ -10,15 +10,15 @@
 
 #include "malloc.h"
 
-int		shrink_node(t_list *node, size_t size)
+int		shrink_node(t_list *node, t_list *last_node, size_t size)
 {
-  /*if (reuse_chunk(node, size))
+  if (reuse_chunk(node, size))
     {
       if (node == last_node)
         update_last_size(node->next);
-      else if (node->next != lastnode)
-        node->next->next->prev = node->next;
-    }*/
+      else
+        merge_chunk(node->next, last_node, 1);
+    }
   return (1);
 }
 
@@ -30,7 +30,7 @@ int		realloc_special_case(t_list *node, size_t size)
   size = ALIGN(size, CPUP2REGSIZE);
   last_node = LASTNODE(gset_break(NULL));
   if (size <= NODESIZE(node))
-    return (shrink_node(node, size));
+    return (shrink_node(node, last_node, size));
   if (node != last_node && !node->next->is_alloc
       && (tmpsize = NODESIZE(node->next) + NODESIZE(node)
                     + sizeof(t_list)) >= size)
