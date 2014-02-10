@@ -84,7 +84,7 @@ t_list	*find_free_size_node(t_list *last_node, size_t req_size);
 */
 
 void		*is_valid_ptr(void *ptr);
-int		reuse_chunk(t_list *chunk, size_t asked_size);
+int		reuse_chunk(t_list *chunk, t_list *last_node, size_t asked_size);
 void		update_last_size(t_list *prev_last_node);
 t_list		*merge_chunk(t_list *tomerge, t_list *lastnode, short rm);
 void		set_chunk_attr(t_list *chunk, unsigned long alloc, size_t size);

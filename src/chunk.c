@@ -13,21 +13,23 @@
 void		*is_valid_ptr(void *ptr)
 {
   t_list	*list;
+  t_list	*lastlist;
 
   if ((size_t)ptr % CPUP2REGSIZE != 0)
     return (NULL);
   list = ((void*)(ptr) - sizeof(t_list));
-  t_list	*lastlist = LASTNODE(gset_break(NULL));
+  lastlist = LASTNODE(gset_break(NULL));
+  return (list); //beware
   while (lastlist)
-    {
-      if (lastlist == list)
-        return (list);
-      lastlist = lastlist->prev;
-    }
+     {
+       if (lastlist == list)
+         return (list);
+       lastlist = lastlist->prev;
+     }
   return (NULL);
 }
 
-int		reuse_chunk(t_list *chunk, size_t asked_size)
+int		reuse_chunk(t_list *chunk, t_list *last_node, size_t asked_size)
 {
   size_t	size;
 
@@ -36,6 +38,8 @@ int		reuse_chunk(t_list *chunk, size_t asked_size)
     {
       chunk->next = (t_list*)((size_t)chunk + sizeof(t_list) + asked_size);
       init_chunk(chunk->next, chunk, size - asked_size - sizeof(t_list));
+      if (chunk == last_node)
+        update_last_size(chunk->next);
       return (1);
     }
   return (0);

@@ -38,8 +38,8 @@ void		*real_malloc(size_t real_size)
       last_node = LASTNODE(bweak);
       if ((result_node = find_free_size_node(last_node, size)) == NULL)
         result_node = add_page(size);
-      else if (reuse_chunk(result_node, size) && (result_node == last_node))
-        update_last_size(last_node->next);
+      else
+        reuse_chunk(result_node, last_node, size);
     }
   set_chunk_attr(result_node, 1, real_size);
   return (result_node ? ((void*)result_node + sizeof(t_list)) : NULL);
