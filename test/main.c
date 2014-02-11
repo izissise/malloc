@@ -171,7 +171,7 @@ malloc(4096 - 48 - 8 + 1); // should be two page
 
   if (pid)
     { //daddy
-      for (i = 0; i < 1000; i++)
+      for (i = 0; i < 10; i++)
         {
           rd = rand() % 500 + 1;
           a = cv(rd);
@@ -183,7 +183,7 @@ malloc(4096 - 48 - 8 + 1); // should be two page
     }
   else
     {
-      for (i = 0; i < 1000; i++)
+      for (i = 0; i < 10; i++)
         {
           rd = rand() % 500 + 1;
           a = cv(rd);

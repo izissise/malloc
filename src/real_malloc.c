@@ -45,16 +45,6 @@ void		*real_malloc(size_t real_size)
   return (result_node ? ((void*)result_node + sizeof(t_list)) : NULL);
 }
 
-void		my_memcpy(void *nptr, void *ptr, size_t nodesize)
-{
-  unsigned char *dst = nptr;
-  unsigned char *src = ptr;
-  size_t	i = -1;
-
-  while (++i < nodesize)
-    dst[i] = src[i];
-}
-
 void		*real_realloc(void *ptr, size_t size)
 {
   void		*nptr;
@@ -69,15 +59,14 @@ void		*real_realloc(void *ptr, size_t size)
       real_free(ptr);
       return (NULL);
     }
-  /*  if (realloc_special_case(node, size))
+  if (realloc_special_case(node, size))
     {
       set_chunk_attr(node, 1, size);
       return (ptr);
-      }*/
+    }
   if ((nptr = real_malloc(size)) == NULL)
     return (NULL);
-  //  my_memcpy(nptr, ptr, NODESIZE(node));	// why this fail ??
-  show_alloc_mem();
+  memcpy(nptr, ptr, NODESIZE(node));
   real_free(ptr);
   return (nptr);
 }

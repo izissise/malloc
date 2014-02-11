@@ -34,8 +34,8 @@ void		show_alloc_mem()
         ++i;
       while (i)
         {
-	  if (node->is_alloc)
-	    print_node(node);
+          if (node->is_alloc)
+            print_node(node);
           node = node->next;
           --i;
         }
