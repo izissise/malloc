@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Mon Feb  3 11:03:50 2014 jonathan.collinet
-** Last update Wed Feb  5 16:55:40 2014 jonathan.collinet
+** Last update Tue Feb 11 01:07:10 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -34,8 +34,8 @@ void		show_alloc_mem()
         ++i;
       while (i)
         {
-          if (node->is_alloc)
-            print_node(node);
+	  if (node->is_alloc)
+	    print_node(node);
           node = node->next;
           --i;
         }

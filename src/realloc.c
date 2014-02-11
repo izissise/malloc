@@ -5,7 +5,7 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Mon Oct  8 16:20:21 2012 hugues morisset
+** Last update Mon Feb 10 21:59:45 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -39,4 +39,3 @@ int		realloc_special_case(t_list *node, size_t size)
     }
   return (0);
 }
-
