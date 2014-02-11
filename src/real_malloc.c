@@ -26,9 +26,9 @@ void		*real_malloc(size_t real_size)
   t_list*	result_node;
   size_t	size;
 
+  real_size = (real_size == 0) ? 1 : real_size;
   if (real_size & 0x8000000000000000)
     return (NULL);
-  real_size = (real_size == 0) ? 1 : real_size;
   size = ALIGN(real_size, CPUP2REGSIZE);
   bweak = gset_break(NULL);
   if (!bweak)

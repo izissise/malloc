@@ -35,7 +35,23 @@ void reset_malloc()
 int			main()
 {
   void *ptr[11];
+  void *sartbrk = sbrk(0);
 
+malloc(3);
+malloc(4096 - 48 - 8 + 1); // should be two page
+  ptr[0] = malloc(5000);
+  ptr[1] = malloc(200);
+  show_alloc_mem();
+  ptr[2] = malloc(100);
+  show_alloc_mem();
+  ptr[3] = malloc(300);
+  ptr[4] = malloc(150);
+  show_alloc_mem();
+  ptr[5] = malloc(450);
+  ptr[6] = malloc(100);
+  ptr[7] = malloc(300);
+  show_alloc_mem();
+  ptr[1] = realloc(ptr[1], 250);
   show_alloc_mem();
 
   malloc(3);

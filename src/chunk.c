@@ -21,11 +21,11 @@ void		*is_valid_ptr(void *ptr)
   lastlist = LASTNODE(gset_break(NULL));
   return (list); //beware
   while (lastlist)
-     {
-       if (lastlist == list)
-         return (list);
-       lastlist = lastlist->prev;
-     }
+    {
+      if (lastlist == list)
+        return (list);
+      lastlist = lastlist->prev;
+    }
   return (NULL);
 }
 

@@ -29,9 +29,11 @@ void		init_pages(t_list *first, t_list *prev_chunk, size_t size)
 {
   size_t		total_ps;
   size_t		f_space_size;
+  size_t		needed_size;
 
-  total_ps = ALIGN((size + sizeof(t_list*) + sizeof(t_list) * 2), PAGESIZE);
-  f_space_size = (total_ps - (sizeof(t_list*) + (sizeof(t_list) * 2) + size));
+  needed_size = (size + sizeof(t_list*) + sizeof(t_list) * 2);
+  total_ps = ALIGN(needed_size, PAGESIZE);
+  f_space_size = (total_ps - needed_size);
   init_chunk(first, prev_chunk, size);
   init_chunk(first->next, first, f_space_size);
   update_last_size(first->next);
@@ -40,7 +42,7 @@ void		init_pages(t_list *first, t_list *prev_chunk, size_t size)
 void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size)
 {
   chunk->prev = prev_chunk;
-  chunk->next = ((void*)chunk + size + sizeof(t_list));
+  chunk->next = (((void*)chunk) + size + sizeof(t_list));
   chunk->is_alloc = 0;
 }
 

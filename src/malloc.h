@@ -16,8 +16,13 @@
 # include <stdio.h>
 # include <errno.h>
 
+# ifdef __i386__
+#  define CPUP2REGSIZE		4
+# else
+#  define CPUP2REGSIZE		8
+# endif
+
 # define PAGESIZE		getpagesize()
-# define CPUP2REGSIZE		8
 # define ALIGN(s, p)	(((size_t)(s) + ((p) - 1)) & ~(size_t)((p) - 1))
 
 # define LASTNODE(brkaddr) ((*(t_list**)(((void*)brkaddr) - sizeof(t_list*))))
