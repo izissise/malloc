@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Mon Feb  3 11:18:40 2014 jonathan.collinet
-** Last update Sat Feb  8 18:45:19 2014 jonathan.collinet
+** Last update Mon Feb 10 22:36:43 2014 jonathan.collinet
 */
 
 #include "../src/malloc.h"
@@ -54,28 +54,32 @@ malloc(4096 - 48 - 8 + 1); // should be two page
   ptr[1] = realloc(ptr[1], 250);
   show_alloc_mem();
 
-  malloc(3);
+  //  malloc(3);
   //malloc(4096 - 64 - 8); // should be one page
+  //  show_alloc_mem();
+
+  //  reset_malloc();
+
+  //  malloc(4096 - 64 - 8 + 1); // should be two page
   show_alloc_mem();
 
-  reset_malloc();
-
-  malloc(4096 - 64 - 8 + 1); // should be two page
-  show_alloc_mem();
-
-  reset_malloc();
+  //  reset_malloc();
   printf("\n\non fait les vrais test ici -- \n\n");
 
   // TEST REALLOC
 
+  show_alloc_mem();
   ptr[0] = malloc(5000);
+  show_alloc_mem();
   ptr[1] = malloc(200);
+  show_alloc_mem();
   ptr[2] = malloc(100);
   ptr[3] = malloc(300);
   ptr[4] = malloc(150);
   ptr[5] = malloc(450);
   ptr[6] = malloc(100);
   ptr[7] = malloc(300);
+  show_alloc_mem();
   free(ptr[0]);
   free(ptr[2]);
   free(ptr[4]);

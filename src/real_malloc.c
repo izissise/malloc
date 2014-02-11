@@ -5,7 +5,7 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Sat Feb  8 18:43:19 2014 jonathan.collinet
+** Last update Tue Feb 11 01:06:44 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -45,6 +45,16 @@ void		*real_malloc(size_t real_size)
   return (result_node ? ((void*)result_node + sizeof(t_list)) : NULL);
 }
 
+void		my_memcpy(void *nptr, void *ptr, size_t nodesize)
+{
+  unsigned char *dst = nptr;
+  unsigned char *src = ptr;
+  size_t	i = -1;
+
+  while (++i < nodesize)
+    dst[i] = src[i];
+}
+
 void		*real_realloc(void *ptr, size_t size)
 {
   void		*nptr;
@@ -59,14 +69,15 @@ void		*real_realloc(void *ptr, size_t size)
       real_free(ptr);
       return (NULL);
     }
-  if (realloc_special_case(node, size))
+  /*  if (realloc_special_case(node, size))
     {
       set_chunk_attr(node, 1, size);
       return (ptr);
-    }
+      }*/
   if ((nptr = real_malloc(size)) == NULL)
     return (NULL);
-  memcpy(nptr, ptr, NODESIZE(node));
+  //  my_memcpy(nptr, ptr, NODESIZE(node));	// why this fail ??
+  show_alloc_mem();
   real_free(ptr);
   return (nptr);
 }
