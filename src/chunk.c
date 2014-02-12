@@ -57,7 +57,7 @@ void		set_chunk_attr(t_list *chunk, unsigned long alloc, size_t size)
 
 t_list		*merge_chunk(t_list *tomerge, t_list *lastnode, short rm)
 {
-/*  if (tomerge->prev && tomerge->prev->is_alloc == 0 && !rm)
+  if (tomerge->prev && tomerge->prev->is_alloc == 0 && !rm)
     {
       tomerge->prev->next = tomerge->next;
       tomerge->next->prev = tomerge->prev;
@@ -69,10 +69,9 @@ t_list		*merge_chunk(t_list *tomerge, t_list *lastnode, short rm)
     {
       tomerge->next = tomerge->next->next;
       if (tomerge->next != lastnode->next)
-        {
-          tomerge->next->prev = tomerge;
-          gset_lastnode(tomerge);
-        }
-    }*/
+        tomerge->next->prev = tomerge;
+      else
+        gset_lastnode(tomerge);
+    }
   return (tomerge);
 }
