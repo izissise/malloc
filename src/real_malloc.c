@@ -100,10 +100,8 @@ void		*real_calloc(size_t nmemb, size_t size)
   void		*ptr;
   size_t	testsize;
 
-  if (size == 0 || nmemb == 0)
-    return (NULL);
   testsize = nmemb * size;
-  if (testsize / size != nmemb)
+  if (size != 0 && testsize / size != nmemb)
     return (NULL);
   if ((ptr = real_malloc(nmemb * size)) != NULL)
     memset(ptr, 0, nmemb * size);
