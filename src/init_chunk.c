@@ -10,31 +10,16 @@
 
 #include "malloc.h"
 
-void		*my_sbrk(intptr_t size)
-{
-  int	ret;
-  void	*lastbweak;
-
-  lastbweak = gset_break(NULL);
-  if (lastbweak == NULL)
-    lastbweak = sbrk(0);
-  ret = brk(lastbweak + size);
-  if (ret == -1)
-    return ((void*)((size_t)ret));
-  gset_break(lastbweak + size);
-  return (lastbweak);
-}
-
 void		init_pages(t_list *first, t_list *prev_chunk, size_t size, size_t t)
 {
   size_t		f_space_size;
   size_t		needed_size;
 
-  needed_size = (size + sizeof(t_list*) + sizeof(t_list) * 2);
+  needed_size = (size + sizeof(t_list) * 2);
   f_space_size = (t - needed_size);
   init_chunk(first, prev_chunk, size);
   init_chunk(first->next, first, f_space_size);
-  update_last_size(first->next);
+  gset_lastnode(first->next);
 }
 
 void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size)
@@ -49,9 +34,8 @@ void		*init_first_chunk(size_t size)
   t_list	*first_addr;
   size_t	needed_size;
 
-  needed_size = ALIGN((size + (sizeof(t_list) * 2) + sizeof(t_list*)),
-                      PAGESIZE);
-  first_addr = my_sbrk(needed_size);
+  needed_size = ALIGN((size + (sizeof(t_list) * 2)), PAGESIZE);
+  first_addr = sbrk(needed_size);
   if (first_addr == ((void*)(-1)))
     return (NULL);
   init_pages(first_addr, NULL, size, needed_size);
@@ -64,13 +48,11 @@ void		*add_page(size_t size)
   t_list	*prev_last_node;
   size_t	needed_size;
 
-  needed_size = ALIGN(size + (sizeof(t_list) * 2) + sizeof(t_list*),
-                      PAGESIZE);
-  page_start = my_sbrk(needed_size);
+  needed_size = ALIGN(size + (sizeof(t_list) * 2), PAGESIZE);
+  page_start = sbrk(needed_size);
   if (page_start == ((void*)(-1)))
     return (NULL);
-  prev_last_node = LASTNODE(page_start);
-  prev_last_node->next = ((void*)prev_last_node->next) + sizeof(t_list*);
+  prev_last_node = gset_lastnode(NULL);
   init_pages(page_start, prev_last_node, size, needed_size);
   return (page_start);
 }

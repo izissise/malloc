@@ -25,7 +25,6 @@
 # define PAGESIZE		getpagesize()
 # define ALIGN(s, p)	(((size_t)(s) + ((p) - 1)) & ~(size_t)((p) - 1))
 
-# define LASTNODE(brkaddr) ((*(t_list**)(((void*)brkaddr) - sizeof(t_list*))))
 # define NODESIZE(x) (((size_t)((x)->next)) - (((size_t)(x)) + sizeof(t_list)))
 # define NODEREALSIZE(x)	((x)->is_alloc)
 # define CHECKVALIDNODE(x)	(is_valid_ptr(x))
@@ -56,7 +55,7 @@ void		*calloc(size_t nmemb, size_t size);
 **	real_malloc.c
 */
 
-void		*gset_break(void *bweak);
+void		*gset_lastnode(void *lastnode);
 void		*real_malloc(size_t real_size);
 void		*real_realloc(void *ptr, size_t size);
 void		real_free(void *ptr);
@@ -72,7 +71,6 @@ int		realloc_special_case(t_list *node, size_t size);
 **	init_chunk.c
 */
 
-void		*my_sbrk(intptr_t size);
 void		init_pages(t_list *first, t_list *prev_chunk, size_t size, size_t t);
 void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size);
 void		*init_first_chunk(size_t size);
@@ -90,7 +88,6 @@ t_list	*find_free_size_node(t_list *last_node, size_t req_size);
 
 void		*is_valid_ptr(void *ptr);
 int		reuse_chunk(t_list *chunk, t_list *last_node, size_t asked_size);
-void		update_last_size(t_list *prev_last_node);
 t_list		*merge_chunk(t_list *tomerge, t_list *lastnode, short rm);
 void		set_chunk_attr(t_list *chunk, unsigned long alloc, size_t size);
 

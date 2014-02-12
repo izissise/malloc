@@ -21,15 +21,13 @@ void		print_node(t_list *node)
 void		show_alloc_mem()
 {
   t_list	*node;
-  void		*bweak;
   int		i;
 
   i = 1;
-  bweak = gset_break(NULL);
+  node = gset_lastnode(NULL);
   printf("break : %p\n", sbrk(0));
-  if (bweak)
+  if (node)
     {
-      node = LASTNODE(bweak);
       while ((node->prev) && (node = node->prev))
         ++i;
       while (i)

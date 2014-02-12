@@ -10,18 +10,17 @@
 
 #include "malloc.h"
 
-void		*gset_break(void *bweak)
+void		*gset_lastnode(void *lastnode)
 {
-  static void*	last_break = NULL;
+  static void*	last_node = NULL;
 
-  if (bweak)
-    last_break = bweak;
-  return (last_break);
+  if (lastnode)
+    last_node = lastnode;
+  return (last_node);
 }
 
 void		*real_malloc(size_t real_size)
 {
-  void*		bweak;
   t_list*	last_node;
   t_list*	result_node;
   size_t	size;
@@ -30,12 +29,11 @@ void		*real_malloc(size_t real_size)
   if (real_size & 0x8000000000000000)
     return (NULL);
   size = ALIGN(real_size, CPUP2REGSIZE);
-  bweak = gset_break(NULL);
-  if (!bweak)
+  last_node = gset_lastnode(NULL);
+  if (!last_node)
     result_node = init_first_chunk(size);
   else
     {
-      last_node = LASTNODE(bweak);
       if ((result_node = find_free_size_node(last_node, size)) == NULL)
         result_node = add_page(size);
       else
@@ -74,15 +72,13 @@ void		*real_realloc(void *ptr, size_t size)
 void		real_free(void *ptr)
 {
   t_list	*cur_node;
-  void		*bweak;
   void		*last_node;
   int		nbp;
 
-  if (!ptr || !gset_break(NULL) || (cur_node = CHECKVALIDNODE(ptr)) == NULL)
+  if (!ptr || !gset_lastnode(NULL) || (cur_node = CHECKVALIDNODE(ptr)) == NULL)
     return ;
-  bweak = gset_break(NULL);
-  cur_node = merge_chunk(cur_node,  LASTNODE(bweak), 0);
-  last_node = LASTNODE(bweak);
+  last_node = gset_lastnode(NULL);
+  cur_node = merge_chunk(cur_node, last_node, 0);
   cur_node->is_alloc = 0;
   if (last_node == cur_node &&
       (NODESIZE(cur_node) > (size_t)PAGESIZE))
@@ -90,8 +86,8 @@ void		real_free(void *ptr)
       nbp = (NODESIZE(cur_node) /  PAGESIZE);
       cur_node->next = (void*)cur_node + sizeof(t_list) +
                        (NODESIZE(cur_node) - (nbp * PAGESIZE));
-      my_sbrk(-(nbp * PAGESIZE));
-      update_last_size(cur_node);
+      sbrk(-(nbp * PAGESIZE));
+      gset_lastnode(cur_node);
     }
 }
 
