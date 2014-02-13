@@ -31,7 +31,7 @@ void		*real_malloc(size_t real_size)
   size = ALIGN(real_size, CPUP2REGSIZE);
   last_node = gset_lastnode(NULL);
   if (!last_node)
-    result_node = init_first_chunk(size);
+    result_node = add_page(size);
   else
     {
       if ((result_node = find_free_size_node(last_node, size)) == NULL)
@@ -94,11 +94,7 @@ void		real_free(void *ptr)
 void		*real_calloc(size_t nmemb, size_t size)
 {
   void		*ptr;
-  size_t	testsize;
 
-  testsize = nmemb * size;
-  if (size != 0 && testsize / size != nmemb)
-    return (NULL);
   if ((ptr = real_malloc(nmemb * size)) != NULL)
     memset(ptr, 0, nmemb * size);
   return (ptr);

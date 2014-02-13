@@ -29,19 +29,6 @@ void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size)
   chunk->is_alloc = 0;
 }
 
-void		*init_first_chunk(size_t size)
-{
-  t_list	*first_addr;
-  size_t	needed_size;
-
-  needed_size = ALIGN((size + (sizeof(t_list) * 2)), PAGESIZE);
-  first_addr = sbrk(needed_size);
-  if (first_addr == ((void*)(-1)))
-    return (NULL);
-  init_pages(first_addr, NULL, size, needed_size);
-  return (first_addr);
-}
-
 void		*add_page(size_t size)
 {
   void		*page_start;
@@ -49,10 +36,10 @@ void		*add_page(size_t size)
   size_t	needed_size;
 
   needed_size = ALIGN(size + (sizeof(t_list) * 2), PAGESIZE);
+  prev_last_node = gset_lastnode(NULL);
   page_start = sbrk(needed_size);
   if (page_start == ((void*)(-1)))
     return (NULL);
-  prev_last_node = gset_lastnode(NULL);
   init_pages(page_start, prev_last_node, size, needed_size);
   return (page_start);
 }
