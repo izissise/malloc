@@ -34,7 +34,7 @@ int		reuse_chunk(t_list *chunk, t_list *last_node, size_t asked_size)
   size_t	size;
 
   size = NODESIZE(chunk);
-  if (asked_size + sizeof(t_list) <= size)
+  if (asked_size + sizeof(t_list) < size)
     {
       chunk->next = (t_list*)((size_t)chunk + sizeof(t_list) + asked_size);
       init_chunk(chunk->next, chunk, size - asked_size - sizeof(t_list));
@@ -60,7 +60,8 @@ t_list		*merge_chunk(t_list *tomerge, t_list *lastnode, short rm)
   if (tomerge->prev && tomerge->prev->is_alloc == 0 && !rm)
     {
       tomerge->prev->next = tomerge->next;
-      tomerge->next->prev = tomerge->prev;
+      if (tomerge->next != lastnode->next)
+        tomerge->next->prev = tomerge->prev;
       tomerge = tomerge->prev;
       if (tomerge->next == lastnode->next)
         lastnode = gset_lastnode(tomerge);
@@ -75,3 +76,4 @@ t_list		*merge_chunk(t_list *tomerge, t_list *lastnode, short rm)
     }
   return (tomerge);
 }
+
