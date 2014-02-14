@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Mon Feb  3 11:03:50 2014 jonathan.collinet
-** Last update Tue Feb 11 01:07:10 2014 jonathan.collinet
+** Last update Fri Feb 14 17:11:22 2014 jonathan.collinet
 */
 
 #include "malloc.h"
@@ -25,7 +25,7 @@ void		show_alloc_mem()
 
   i = 1;
   node = gset_lastnode(NULL);
-  printf("break : %p\n", sbrk(0));
+  printf("break : 0x%lX\n", (unsigned long int)sbrk(0));
   if (node)
     {
       while ((node->prev) && (node = node->prev))
