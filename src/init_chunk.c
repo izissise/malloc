@@ -10,12 +10,9 @@
 
 #include "malloc.h"
 
-void		init_pages(t_list *first, t_list *prev_chunk, size_t size, size_t t)
+void		init_pages(t_list *first, t_list *prev_chunk,
+                   size_t size, size_t t)
 {
-  size_t		f_space_size;
-  size_t		needed_size;
-
-  needed_size = (size + sizeof(t_list) * 2);
   init_chunk(first, prev_chunk, t - sizeof(t_list));
   if (!reuse_chunk(first, first, size))
     gset_lastnode(first);
@@ -39,7 +36,6 @@ void		*add_page(size_t size)
   page_start = sbrk(needed_size);
   if (page_start == ((void*)(-1)))
     return (NULL);
-  //prev_last_node->next = page_start;
   init_pages(page_start, prev_last_node, size, needed_size);
   return (page_start);
 }

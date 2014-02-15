@@ -15,18 +15,15 @@ void		*is_valid_ptr(void *ptr)
   t_list	*list;
   t_list	*lastlist;
 
+  lastlist = gset_lastnode(NULL);
   if ((size_t)ptr % CPUP2REGSIZE != 0)
     return (NULL);
   list = ((void*)(ptr) - sizeof(t_list));
-  lastlist = gset_lastnode(NULL);
-  return (list); //beware
-  while (lastlist)
-    {
-      if (lastlist == list)
-        return (list);
-      lastlist = lastlist->prev;
-    }
-  return (NULL);
+  if (((size_t)list->next % CPUP2REGSIZE != 0)
+      || ((size_t)list->prev % CPUP2REGSIZE != 0)
+      || list->next < list->prev || list > lastlist)
+    return (NULL);
+  return (list);
 }
 
 int		reuse_chunk(t_list *chunk, t_list *last_node, size_t asked_size)

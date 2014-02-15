@@ -71,7 +71,8 @@ int		realloc_special_case(t_list *node, size_t size);
 **	init_chunk.c
 */
 
-void		init_pages(t_list *first, t_list *prev_chunk, size_t size, size_t t);
+void		init_pages(t_list *first, t_list *prev_chunk,
+                   size_t size, size_t t);
 void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size);
 void		*add_page(size_t size);
 
