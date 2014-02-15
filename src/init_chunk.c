@@ -40,6 +40,7 @@ void		*add_page(size_t size)
   page_start = sbrk(needed_size);
   if (page_start == ((void*)(-1)))
     return (NULL);
+  //prev_last_node->next = page_start;
   init_pages(page_start, prev_last_node, size, needed_size);
   return (page_start);
 }

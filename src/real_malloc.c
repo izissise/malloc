@@ -30,15 +30,10 @@ void		*real_malloc(size_t real_size)
     return (NULL);
   size = ALIGN(real_size, CPUP2REGSIZE);
   last_node = gset_lastnode(NULL);
-  if (!last_node)
+  if ((result_node = find_free_size_node(last_node, size)) == NULL)
     result_node = add_page(size);
   else
-    {
-      if ((result_node = find_free_size_node(last_node, size)) == NULL)
-        result_node = add_page(size);
-      else
-        reuse_chunk(result_node, last_node, size);
-    }
+    reuse_chunk(result_node, last_node, size);
   set_chunk_attr(result_node, 1, real_size);
   return (result_node ? ((void*)result_node + sizeof(t_list)) : NULL);
 }
