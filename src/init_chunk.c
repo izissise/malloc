@@ -31,7 +31,7 @@ void		*add_page(size_t size)
   t_list	*prev_last_node;
   size_t	needed_size;
 
-  needed_size = ALIGN(size + (sizeof(t_list) * 2), PAGESIZE);
+  needed_size = ALIGN(size + sizeof(t_list), PAGESIZE);
   prev_last_node = gset_lastnode(NULL);
   page_start = sbrk(needed_size);
   if (page_start == ((void*)(-1)))

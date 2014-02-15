@@ -75,6 +75,7 @@ void		real_free(void *ptr)
   last_node = gset_lastnode(NULL);
   cur_node = merge_chunk(cur_node, last_node, 0);
   cur_node->is_alloc = 0;
+  last_node = gset_lastnode(NULL);
   if ((last_node == cur_node) && (NODESIZE(cur_node) > (size_t)PAGESIZE))
     {
       nbp = (NODESIZE(cur_node) /  PAGESIZE);
