@@ -79,8 +79,8 @@ void		real_free(void *ptr)
       (NODESIZE(cur_node) > (size_t)PAGESIZE))
     {
       nbp = (NODESIZE(cur_node) /  PAGESIZE);
-      cur_node->next = (void*)cur_node + sizeof(t_list) +
-                       (NODESIZE(cur_node) - (nbp * PAGESIZE));
+      cur_node->next = (void*)cur_node + sizeof(t_list)
+                       + (NODESIZE(cur_node) - (nbp * PAGESIZE));
       sbrk(-(nbp * PAGESIZE));
       gset_lastnode(cur_node);
     }

@@ -16,10 +16,9 @@ void		init_pages(t_list *first, t_list *prev_chunk, size_t size, size_t t)
   size_t		needed_size;
 
   needed_size = (size + sizeof(t_list) * 2);
-  f_space_size = (t - needed_size);
-  init_chunk(first, prev_chunk, size);
-  init_chunk(first->next, first, f_space_size);
-  gset_lastnode(first->next);
+  init_chunk(first, prev_chunk, t - sizeof(t_list));
+  if (!reuse_chunk(first, first, size))
+    gset_lastnode(first);
 }
 
 void		init_chunk(t_list *chunk, t_list *prev_chunk, size_t size)

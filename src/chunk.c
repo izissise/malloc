@@ -37,7 +37,7 @@ int		reuse_chunk(t_list *chunk, t_list *last_node, size_t asked_size)
   if (asked_size + sizeof(t_list) < size)
     {
       chunk->next = (t_list*)((size_t)chunk + sizeof(t_list) + asked_size);
-      init_chunk(chunk->next, chunk, size - asked_size - sizeof(t_list));
+      init_chunk(chunk->next, chunk, size - (asked_size + sizeof(t_list)));
       if (chunk == last_node)
         gset_lastnode(chunk->next);
       return (1);
