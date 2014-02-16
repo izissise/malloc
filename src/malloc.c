@@ -5,7 +5,7 @@
 ** Login   <collin_b@epitech.net>
 **
 ** Started on  Fri Jan 31 11:45:34 2014 jonathan.collinet
-** Last update Sat Feb  8 18:39:53 2014 jonathan.collinet
+** Last update Sun Feb 16 15:24:12 2014 jonathan.collinet
 */
 
 #include <pthread.h>
@@ -13,13 +13,7 @@
 
 static pthread_mutex_t g_epimalloc_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-/*
-** malloc function
-** in case it's the first address, we allocate a new page,
-** else we try to use an already existing one
-*/
-
-void		*malloc(size_t real_size)
+void	*malloc(size_t real_size)
 {
   void	*ptr;
 
@@ -31,7 +25,7 @@ void		*malloc(size_t real_size)
   return (ptr);
 }
 
-void		*realloc(void *ptr, size_t size)
+void	*realloc(void *ptr, size_t size)
 {
   void	*nptr;
 
@@ -43,14 +37,14 @@ void		*realloc(void *ptr, size_t size)
   return (nptr);
 }
 
-void		free(void *ptr)
+void	free(void *ptr)
 {
   pthread_mutex_lock(&g_epimalloc_mutex);
   real_free(ptr);
   pthread_mutex_unlock(&g_epimalloc_mutex);
 }
 
-void		*calloc(size_t nmemb, size_t size)
+void	*calloc(size_t nmemb, size_t size)
 {
   void	*ptr;
 

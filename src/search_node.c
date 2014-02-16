@@ -5,12 +5,12 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Mon Feb  3 22:54:59 2014 jonathan.collinet
+** Last update Sun Feb 16 15:24:45 2014 jonathan.collinet
 */
 
 #include "malloc.h"
 
-t_list	*find_free_size_node(t_list *last_node, size_t req_size)
+t_list		*find_free_size_node(t_list *last_node, size_t req_size)
 {
   t_list	*tmp_node;
 
