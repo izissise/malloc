@@ -30,12 +30,14 @@ int		realloc_special_case(t_list *node, size_t size)
   last_node = gset_lastnode(NULL);
   if (size <= NODESIZE(node))
     return (shrink_node(node, last_node, size));
- /* if (node != last_node && !node->next->is_alloc
-      && (NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) >= size)
+  if (node != last_node && !node->next->is_alloc
+      && (NODESIZE(node->next) + NODESIZE(node) + sizeof(t_list)) > size)
     {
-      merge_chunk(node, last_node, 1);
-      last_node = gset_lastnode(NULL);
-      return (shrink_node(node, last_node, size));
-    }*/
+      if (last_node->next == node->next)
+        {
+          merge_chunk(node, last_node, 1);
+          return (1);
+        }
+    }
   return (0);
 }
