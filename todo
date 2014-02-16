@@ -1,7 +1,0 @@
-script mem color in 3d
-realloc last node brk
-verify pointer sended to free
-weird bug
-test libc stuff
-real algo ?
-config file ?
