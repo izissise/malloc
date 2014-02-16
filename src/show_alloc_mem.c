@@ -25,7 +25,7 @@ void		show_alloc_mem()
 
   i = 1;
   node = gset_lastnode(NULL);
-  printf("break : 0x%lX\n", (unsigned long int)sbrk(0));
+  printf("break : 0x%lX\n", (size_t)sbrk(0));
   if (node)
     {
       while ((node->prev) && (node = node->prev))

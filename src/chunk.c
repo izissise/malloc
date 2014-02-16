@@ -57,10 +57,10 @@ t_list		*merge_chunk(t_list *tomerge, t_list *lastnode, short rm)
   if (tomerge->prev && tomerge->prev->is_alloc == 0 && !rm)
     {
       tomerge->prev->next = tomerge->next;
-      if (tomerge->next != lastnode->next)
-        tomerge->next->prev = tomerge->prev;
       tomerge = tomerge->prev;
-      if (tomerge->next == lastnode->next)
+      if (tomerge->next != lastnode->next)
+        tomerge->next->prev = tomerge;
+      else
         lastnode = gset_lastnode(tomerge);
     }
   if (tomerge != lastnode && tomerge->next->is_alloc == 0)
